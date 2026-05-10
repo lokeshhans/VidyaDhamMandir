@@ -1,235 +1,400 @@
-import React, { useState } from 'react'
+import React, { useMemo, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useInView } from 'react-intersection-observer'
+
 import Lightbox from 'yet-another-react-lightbox'
 import 'yet-another-react-lightbox/styles.css'
+
+/* ===================================================== */
+/* GALLERY DATA */
+/* ===================================================== */
 
 const galleryImages = [
   {
     id: 1,
     category: 'classroom',
-    title: 'Biology Lab Session',
-    image: 'https://images.unsplash.com/photo-1532187863486-abbb9c13f35f?w=600&h=400&fit=crop',
-    emoji: '🧪',
+    title: 'Biology Practical Session',
+    image:
+      'https://images.unsplash.com/photo-1532187863486-abbb9c13f35f?w=1200&q=80',
   },
   {
     id: 2,
-    category: 'classroom',
-    title: 'NEET Class in Progress',
-    image: 'https://images.unsplash.com/photo-1427504494785-cdfc993d4d3d?w=600&h=400&fit=crop',
-    emoji: '📚',
+    category: 'neet',
+    title: 'NEET Guidance Class',
+    image:
+      'https://images.unsplash.com/photo-1427504494785-cdfc993d4d3d?w=1200&q=80',
   },
   {
     id: 3,
-    category: 'activities',
-    title: 'Group Study Session',
-    image: 'https://images.unsplash.com/photo-1522202176988-696cb6bfc14d?w=600&h=400&fit=crop',
-    emoji: '👥',
+    category: 'students',
+    title: 'Collaborative Student Learning',
+    image:
+      'https://images.unsplash.com/photo-1522202176988-696cb6bfc14d?w=1200&q=80',
   },
   {
     id: 4,
-    category: 'motivation',
-    title: 'Success Stories Sharing',
-    image: 'https://images.unsplash.com/photo-1552664730-d307ca884978?w=600&h=400&fit=crop',
-    emoji: '⭐',
+    category: 'mentorship',
+    title: 'Student Mentorship Session',
+    image:
+      'https://images.unsplash.com/photo-1552664730-d307ca884978?w=1200&q=80',
   },
   {
     id: 5,
     category: 'biology',
-    title: 'Practical Biology Class',
-    image: 'https://images.unsplash.com/photo-1530124566582-a618bc2615dc?w=600&h=400&fit=crop',
-    emoji: '🧬',
+    title: 'Advanced Biology Discussion',
+    image:
+      'https://images.unsplash.com/photo-1530124566582-a618bc2615dc?w=1200&q=80',
   },
   {
     id: 6,
-    category: 'learning',
-    title: 'Collaborative Learning',
-    image: 'https://images.unsplash.com/photo-1427504494785-cdfc993d4d3d?w=600&h=400&fit=crop',
-    emoji: '🤝',
-  },
-  {
-    id: 7,
     category: 'community',
-    title: 'Student Achievement Board',
-    image: 'https://images.unsplash.com/photo-1523580494863-6f3031224c94?w=600&h=400&fit=crop',
-    emoji: '🏆',
-  },
-  {
-    id: 8,
-    category: 'activities',
-    title: 'Motivational Workshop',
-    image: 'https://images.unsplash.com/photo-1552664730-d307ca884978?w=600&h=400&fit=crop',
-    emoji: '💪',
-  },
-  {
-    id: 9,
-    category: 'achievements',
-    title: 'NEET Success Celebrations',
-    image: 'https://images.unsplash.com/photo-1552664730-d307ca884978?w=600&h=400&fit=crop',
-    emoji: '🎉',
+    title: 'Educational Community Support',
+    image:
+      'https://images.unsplash.com/photo-1523580494863-6f3031224c94?w=1200&q=80',
   },
 ]
 
 const categories = [
-  { id: 'all', label: 'All', icon: '📸' },
-  { id: 'classroom', label: 'Classrooms', icon: '📚' },
-  { id: 'biology', label: 'Biology Classes', icon: '🧬' },
-  { id: 'activities', label: 'Activities', icon: '🎯' },
-  { id: 'motivation', label: 'Motivation', icon: '🌟' },
-  { id: 'learning', label: 'Learning', icon: '👥' },
-  { id: 'community', label: 'Community', icon: '💖' },
-  { id: 'achievements', label: 'Achievements', icon: '🏆' },
+  { id: 'all', label: 'All' },
+  { id: 'classroom', label: 'Classrooms' },
+  { id: 'biology', label: 'Biology' },
+  { id: 'neet', label: 'NEET Guidance' },
+  { id: 'students', label: 'Students' },
+  { id: 'community', label: 'Community' },
 ]
 
+/* ===================================================== */
+/* COMPONENT */
+/* ===================================================== */
+
 export default function Gallery() {
+
   const [filter, setFilter] = useState('all')
+
   const [lightboxOpen, setLightboxOpen] = useState(false)
+
   const [lightboxIndex, setLightboxIndex] = useState(0)
-  const { ref, inView } = useInView({ threshold: 0.1, triggerOnce: true })
 
-  const filteredImages =
-    filter === 'all' ? galleryImages : galleryImages.filter((img) => img.category === filter)
+  const { ref, inView } = useInView({
+    threshold: 0.1,
+    triggerOnce: true,
+  })
 
-  const lightboxSlides = filteredImages.map((img) => ({
-    src: img.image,
+  /* ===================================================== */
+  /* FILTERED IMAGES */
+  /* ===================================================== */
+
+  const filteredImages = useMemo(() => {
+
+    if (filter === 'all') {
+      return galleryImages
+    }
+
+    return galleryImages.filter(
+      (image) => image.category === filter
+    )
+
+  }, [filter])
+
+  /* ===================================================== */
+  /* LIGHTBOX */
+  /* ===================================================== */
+
+  const slides = filteredImages.map((image) => ({
+    src: image.image,
   }))
 
-  const handleImageClick = (index) => {
+  function handleOpen(index) {
     setLightboxIndex(index)
     setLightboxOpen(true)
   }
 
-  return (
-    <section id="gallery" ref={ref} className="section-pad bg-warm-white relative overflow-hidden">
-      {/* Decorative */}
-      <div className="absolute -top-40 right-0 w-96 h-96 bg-saffron-500/8 rounded-full blur-3xl" />
+  /* ===================================================== */
+  /* UI */
+  /* ===================================================== */
 
-      <div className="relative max-w-7xl mx-auto">
-        {/* Header */}
+  return (
+    <section
+      id="gallery"
+      ref={ref}
+      className="relative section-pad overflow-hidden bg-[#fffdf9]"
+      aria-labelledby="gallery-heading"
+    >
+
+      {/* Background */}
+      <div className="absolute inset-0 pointer-events-none">
+
+        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-orange-50 rounded-full blur-3xl opacity-50"></div>
+
+        <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-amber-50 rounded-full blur-3xl opacity-40"></div>
+
+      </div>
+
+      <div className="container-custom relative z-10">
+
+        {/* ===================================================== */}
+        {/* HEADER */}
+        {/* ===================================================== */}
+
         <motion.div
           initial={{ opacity: 0, y: 30 }}
-          animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-          className="text-center mb-12"
+          animate={inView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.7 }}
+          className="max-w-4xl mx-auto text-center"
         >
-          <p className="section-label mb-3">हमारी गैलरी</p>
-          <h2 className="section-heading mx-auto max-w-3xl">
-            See It in <span className="text-gradient-saffron">Action</span>
+
+          <span className="section-label">
+            Campus Gallery
+          </span>
+
+          <h2
+            id="gallery-heading"
+            className="section-heading mt-4 text-balance"
+          >
+
+            A Learning Environment
+            <span className="text-orange-soft">
+              {' '}Built Around Students
+            </span>
+
           </h2>
-          <p className="text-gray-600 text-lg mt-4 max-w-2xl mx-auto">
-            Real classroom moments, real student achievements, real impact.
+
+          <p className="mt-6 text-lg leading-8 text-slate-600 max-w-3xl mx-auto">
+
+            Explore classroom learning, mentorship sessions,
+            student activities, and educational moments that
+            define the Vidya Dham Mandir experience.
+
           </p>
+
         </motion.div>
 
-        {/* Filter buttons */}
+        {/* ===================================================== */}
+        {/* FILTERS */}
+        {/* ===================================================== */}
+
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-          transition={{ delay: 0.1 }}
-          className="flex flex-wrap justify-center gap-2 mb-12"
+          initial={{ opacity: 0 }}
+          animate={inView ? { opacity: 1 } : {}}
+          transition={{ delay: 0.2 }}
+          className="flex flex-wrap justify-center gap-3 mt-14"
         >
-          {categories.map((cat) => (
-            <motion.button
-              key={cat.id}
-              onClick={() => setFilter(cat.id)}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className={`flex items-center gap-2 px-4 py-2.5 rounded-full font-semibold text-sm transition-all duration-300 ${
-                filter === cat.id
-                  ? 'bg-gradient-to-r from-saffron-500 to-orange-600 text-white shadow-saffron'
-                  : 'glass-card hover:shadow-glass'
+
+          {categories.map((category) => (
+
+            <button
+              key={category.id}
+              onClick={() => setFilter(category.id)}
+              className={`px-5 py-3 rounded-full text-sm font-semibold transition-all duration-300 border ${
+                filter === category.id
+                  ? 'bg-orange-500 text-white border-orange-500 shadow-soft'
+                  : 'bg-white text-slate-700 border-slate-200 hover:border-orange-300'
               }`}
             >
-              <span className="text-lg">{cat.icon}</span>
-              {cat.label}
-            </motion.button>
+
+              {category.label}
+
+            </button>
+
           ))}
+
         </motion.div>
 
-        {/* Masonry grid */}
+        {/* ===================================================== */}
+        {/* GRID */}
+        {/* ===================================================== */}
+
         <motion.div
           layout
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-12"
+          className="grid sm:grid-cols-2 xl:grid-cols-3 gap-6 mt-16"
         >
+
           <AnimatePresence mode="popLayout">
-            {filteredImages.map((img, idx) => (
-              <motion.div
-                key={img.id}
+
+            {filteredImages.map((image, index) => (
+
+              <motion.article
+                key={image.id}
                 layout
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.8 }}
-                transition={{ duration: 0.4 }}
-                onClick={() => handleImageClick(idx)}
-                className="group cursor-pointer rounded-2xl overflow-hidden shadow-glass hover:shadow-saffron transition-all duration-300 hover:-translate-y-2"
+                initial={{
+                  opacity: 0,
+                  y: 20,
+                }}
+                animate={
+                  inView
+                    ? {
+                        opacity: 1,
+                        y: 0,
+                      }
+                    : {}
+                }
+                exit={{
+                  opacity: 0,
+                  scale: 0.96,
+                }}
+                transition={{
+                  duration: 0.45,
+                  delay: index * 0.05,
+                }}
+                className="group premium-card overflow-hidden p-0 cursor-pointer"
+                onClick={() => handleOpen(index)}
               >
-                {/* Image container */}
-                <div className="relative h-64 sm:h-72 overflow-hidden bg-gray-200">
+
+                {/* Image */}
+                <div className="relative overflow-hidden">
+
                   <img
-                    src={img.image}
-                    alt={img.title}
-                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                    src={image.image}
+                    alt={image.title}
+                    loading="lazy"
+                    className="w-full h-[320px] object-cover transition-transform duration-700 group-hover:scale-[1.03]"
                   />
 
                   {/* Overlay */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-royal-900/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
-                    <div className="text-white">
-                      <div className="text-3xl mb-2">{img.emoji}</div>
-                      <h4 className="font-bold text-lg leading-tight">{img.title}</h4>
-                      <p className="text-saffron-300 text-xs mt-2 flex items-center gap-1">
-                        <span>👁️</span> Click to view
-                      </p>
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent opacity-90"></div>
+
+                  {/* Content */}
+                  <div className="absolute bottom-0 left-0 p-6 w-full">
+
+                    <div className="inline-flex items-center px-3 py-1 rounded-full bg-white/10 backdrop-blur-sm border border-white/10 text-white text-xs font-medium uppercase tracking-wide">
+
+                      {image.category}
+
                     </div>
+
+                    <h3 className="mt-4 text-white text-2xl font-semibold leading-snug max-w-[90%]">
+
+                      {image.title}
+
+                    </h3>
+
+                    <p className="mt-3 text-sm text-slate-200">
+
+                      Click to explore image
+
+                    </p>
+
                   </div>
+
                 </div>
 
-                {/* Category badge */}
-                <div className="absolute top-3 right-3 bg-white/95 backdrop-blur-sm px-3 py-1.5 rounded-full text-xs font-semibold text-saffron-600 shadow-sm">
-                  {img.category}
-                </div>
-              </motion.div>
+              </motion.article>
+
             ))}
+
           </AnimatePresence>
+
         </motion.div>
 
-        {/* Lightbox */}
-        {lightboxOpen && (
-          <Lightbox
-            open={lightboxOpen}
-            close={() => setLightboxOpen(false)}
-            slides={lightboxSlides}
-            index={lightboxIndex}
-            styles={{
-              container: { backgroundColor: 'rgba(15, 26, 77, 0.95)' },
-            }}
-          />
-        )}
+        {/* ===================================================== */}
+        {/* STATS */}
+        {/* ===================================================== */}
 
-        {/* Statistics footer */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
-          animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-          transition={{ delay: 0.3 }}
-          className="glass-card rounded-2xl p-8 text-center border-t-2 border-saffron-500"
+          animate={inView ? { opacity: 1, y: 0 } : {}}
+          transition={{
+            duration: 0.7,
+            delay: 0.2,
+          }}
+          className="mt-24"
         >
-          <div className="grid sm:grid-cols-3 gap-6">
-            {[
-              { number: '500+', label: 'Student Photos' },
-              { number: '50+', label: 'Monthly Events' },
-              { number: '100%', label: 'Real Moments' },
-            ].map((stat, i) => (
-              <motion.div
-                key={stat.label}
-                initial={{ opacity: 0, y: 10 }}
-                animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
-                transition={{ delay: 0.4 + i * 0.1 }}
-              >
-                <p className="text-3xl font-bold text-gradient-saffron">{stat.number}</p>
-                <p className="text-gray-600 font-medium text-sm mt-1">{stat.label}</p>
-              </motion.div>
-            ))}
+
+          <div className="premium-card relative overflow-hidden text-center">
+
+            {/* Background */}
+            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[400px] h-[400px] bg-orange-50 rounded-full blur-3xl opacity-60"></div>
+
+            <div className="relative z-10">
+
+              <span className="section-label">
+                Student Community
+              </span>
+
+              <h3 className="text-4xl md:text-5xl font-bold tracking-tight text-slate-900 mt-4">
+
+                Learning Beyond The Classroom
+
+              </h3>
+
+              <div className="grid sm:grid-cols-3 gap-10 mt-14">
+
+                {[
+                  {
+                    value: '500+',
+                    label: 'Students Guided',
+                  },
+                  {
+                    value: '50+',
+                    label: 'Learning Activities',
+                  },
+                  {
+                    value: '100%',
+                    label: 'Student Focused Environment',
+                  },
+                ].map((item, index) => (
+
+                  <motion.div
+                    key={item.label}
+                    initial={{
+                      opacity: 0,
+                      y: 20,
+                    }}
+                    animate={
+                      inView
+                        ? {
+                            opacity: 1,
+                            y: 0,
+                          }
+                        : {}
+                    }
+                    transition={{
+                      delay: 0.3 + index * 0.08,
+                    }}
+                  >
+
+                    <p className="text-5xl font-bold tracking-tight text-orange-500">
+
+                      {item.value}
+
+                    </p>
+
+                    <p className="mt-3 text-slate-600 leading-7 font-medium">
+
+                      {item.label}
+
+                    </p>
+
+                  </motion.div>
+
+                ))}
+
+              </div>
+
+            </div>
+
           </div>
+
         </motion.div>
+
       </div>
+
+      {/* ===================================================== */}
+      {/* LIGHTBOX */}
+      {/* ===================================================== */}
+
+      <Lightbox
+        open={lightboxOpen}
+        close={() => setLightboxOpen(false)}
+        slides={slides}
+        index={lightboxIndex}
+        styles={{
+          container: {
+            backgroundColor: 'rgba(11,17,32,0.96)',
+          },
+        }}
+      />
+
     </section>
   )
 }

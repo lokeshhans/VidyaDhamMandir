@@ -1,149 +1,313 @@
-import React, { useState, useEffect } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
-import { FaWhatsapp, FaPhone, FaArrowUp, FaPlus, FaTimes, FaCalendarAlt } from 'react-icons/fa'
+import React, { useEffect, useState } from 'react'
+
+import {
+  motion,
+  AnimatePresence,
+} from 'framer-motion'
+
+import {
+  FaWhatsapp,
+  FaPhoneAlt,
+  FaArrowUp,
+  FaComments,
+} from 'react-icons/fa'
+
+/* ===================================================== */
+/* HELPERS */
+/* ===================================================== */
+
+function scrollToSection(id) {
+
+  const element = document.querySelector(id)
+
+  if (element) {
+    element.scrollIntoView({
+      behavior: 'smooth',
+    })
+  }
+}
+
+/* ===================================================== */
+/* COMPONENT */
+/* ===================================================== */
 
 export default function FloatingActions() {
-  const [showScroll, setShowScroll] = useState(false)
-  const [menuOpen, setMenuOpen] = useState(false)
+
+  const [showScrollTop, setShowScrollTop] = useState(false)
+
+  const [showMobileBar, setShowMobileBar] = useState(true)
+
+  /* ===================================================== */
+  /* SCROLL DETECTION */
+  /* ===================================================== */
 
   useEffect(() => {
-    const onScroll = () => setShowScroll(window.scrollY > 400)
-    window.addEventListener('scroll', onScroll)
-    return () => window.removeEventListener('scroll', onScroll)
+
+    const handleScroll = () => {
+
+      setShowScrollTop(window.scrollY > 500)
+
+      if (window.scrollY > 150) {
+        setShowMobileBar(true)
+      }
+
+    }
+
+    window.addEventListener('scroll', handleScroll)
+
+    return () =>
+      window.removeEventListener('scroll', handleScroll)
+
   }, [])
 
-  const scrollTop = () => window.scrollTo({ top: 0, behavior: 'smooth' })
+  /* ===================================================== */
+  /* SCROLL TO TOP */
+  /* ===================================================== */
 
-  const menuItems = [
-    {
-      icon: <FaPhone />,
-      label: 'Call Now',
-      href: 'tel:+919999999999',
-      color: 'bg-blue-600',
-    },
-    {
-      icon: <FaCalendarAlt />,
-      label: 'Join Classes',
-      onClick: () => {
-        setMenuOpen(false)
-        document.querySelector('#admission')?.scrollIntoView({ behavior: 'smooth' })
-      },
-      color: 'bg-saffron-600',
-    },
-    {
-      icon: <FaWhatsapp />,
-      label: 'WhatsApp',
-      href: 'https://wa.me/919999999999?text=Mujhe%20Vidya%20Dham%20Mandir%20ke%20classes%20join%20karni%20hain',
-      color: 'bg-green-500',
-    },
-  ]
+  function scrollTop() {
+
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    })
+
+  }
+
+  /* ===================================================== */
+  /* UI */
+  /* ===================================================== */
 
   return (
     <>
-      {/* Sticky bottom bar on mobile */}
-      <div className="fixed bottom-0 left-0 right-0 lg:hidden z-40 bg-white border-t border-gray-100 shadow-lg px-4 py-3 flex gap-3">
-        <a
-          href="tel:+919999999999"
-          className="flex-1 flex items-center justify-center gap-2 bg-royal-900 text-white text-sm font-semibold py-3 rounded-xl"
-        >
-          <FaPhone className="text-xs" /> Call
-        </a>
-        <button
-          onClick={() => document.querySelector('#admission')?.scrollIntoView({ behavior: 'smooth' })}
-          className="flex-1 flex items-center justify-center gap-2 bg-saffron-600 text-white text-sm font-semibold py-3 rounded-xl"
-        >
-          Join Free
-        </button>
-        <a
-          href="https://wa.me/919999999999?text=Mujhe%20join%20karna%20hai"
+
+      {/* ===================================================== */}
+      {/* MOBILE ACTION BAR */}
+      {/* ===================================================== */}
+
+      <AnimatePresence>
+
+        {showMobileBar && (
+
+          <motion.div
+            initial={{
+              y: 100,
+              opacity: 0,
+            }}
+            animate={{
+              y: 0,
+              opacity: 1,
+            }}
+            exit={{
+              y: 100,
+              opacity: 0,
+            }}
+            transition={{
+              duration: 0.35,
+            }}
+            className="fixed bottom-4 left-4 right-4 z-[60] lg:hidden"
+          >
+
+            <div className="backdrop-blur-2xl bg-white/90 border border-white/40 rounded-3xl shadow-2xl p-3">
+
+              <div className="grid grid-cols-3 gap-3">
+
+                {/* Call */}
+                <a
+                  href="tel:+918053678711"
+                  className="flex flex-col items-center justify-center gap-2 rounded-2xl bg-[#0b1120] text-white py-4 transition-all duration-300 active:scale-[0.97]"
+                >
+
+                  <FaPhoneAlt className="text-sm" />
+
+                  <span className="text-[11px] font-semibold tracking-wide">
+                    Call
+                  </span>
+
+                </a>
+
+                {/* Join */}
+                <button
+                  onClick={() =>
+                    scrollToSection('#admission')
+                  }
+                  className="flex flex-col items-center justify-center gap-2 rounded-2xl bg-orange-500 text-white py-4 transition-all duration-300 active:scale-[0.97]"
+                >
+
+                  <FaComments className="text-sm" />
+
+                  <span className="text-[11px] font-semibold tracking-wide">
+                    Join Free
+                  </span>
+
+                </button>
+
+                {/* WhatsApp */}
+                <a
+                  href="https://wa.me/918053678711?text=Namaste%20Sir,%20mujhe%20Vidya%20Dham%20Mandir%20ke%20classes%20ke%20baare%20mein%20jaankari%20chahiye."
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex flex-col items-center justify-center gap-2 rounded-2xl bg-green-500 text-white py-4 transition-all duration-300 active:scale-[0.97]"
+                >
+
+                  <FaWhatsapp className="text-base" />
+
+                  <span className="text-[11px] font-semibold tracking-wide">
+                    WhatsApp
+                  </span>
+
+                </a>
+
+              </div>
+
+            </div>
+
+          </motion.div>
+
+        )}
+
+      </AnimatePresence>
+
+      {/* ===================================================== */}
+      {/* DESKTOP FLOATING ACTIONS */}
+      {/* ===================================================== */}
+
+      <div className="hidden lg:flex fixed bottom-8 right-8 z-[60] flex-col items-end gap-4">
+
+        {/* ================================================= */}
+        {/* WHATSAPP */}
+        {/* ================================================= */}
+
+        <motion.a
+          href="https://wa.me/918053678711?text=Namaste%20Sir,%20mujhe%20Vidya%20Dham%20Mandir%20ke%20classes%20ke%20baare%20mein%20jaankari%20chahiye."
           target="_blank"
           rel="noopener noreferrer"
-          className="flex-1 flex items-center justify-center gap-2 bg-green-500 text-white text-sm font-semibold py-3 rounded-xl"
+          initial={{
+            opacity: 0,
+            x: 20,
+          }}
+          animate={{
+            opacity: 1,
+            x: 0,
+          }}
+          whileHover={{
+            y: -2,
+          }}
+          whileTap={{
+            scale: 0.97,
+          }}
+          className="group flex items-center gap-4 rounded-full bg-green-500 text-white pl-5 pr-6 py-4 shadow-2xl hover:bg-green-600 transition-all duration-300"
+          aria-label="Chat on WhatsApp"
         >
-          <FaWhatsapp /> WhatsApp
-        </a>
-      </div>
 
-      {/* Desktop FAB group */}
-      <div className="hidden lg:flex fixed bottom-8 right-8 z-50 flex-col items-end gap-3">
-        {/* Scroll to top */}
+          <div className="w-10 h-10 rounded-full bg-white/15 flex items-center justify-center">
+
+            <FaWhatsapp className="text-xl" />
+
+          </div>
+
+          <div>
+
+            <p className="text-[11px] uppercase tracking-[0.18em] text-green-100">
+              Quick Support
+            </p>
+
+            <p className="font-semibold text-sm mt-1">
+              Chat on WhatsApp
+            </p>
+
+          </div>
+
+        </motion.a>
+
+        {/* ================================================= */}
+        {/* CALL */}
+        {/* ================================================= */}
+
+        <motion.a
+          href="tel:+918053678711"
+          initial={{
+            opacity: 0,
+            x: 20,
+          }}
+          animate={{
+            opacity: 1,
+            x: 0,
+          }}
+          transition={{
+            delay: 0.1,
+          }}
+          whileHover={{
+            y: -2,
+          }}
+          whileTap={{
+            scale: 0.97,
+          }}
+          className="group flex items-center gap-4 rounded-full bg-[#0b1120] text-white pl-5 pr-6 py-4 shadow-2xl border border-white/5 hover:bg-slate-900 transition-all duration-300"
+          aria-label="Call Now"
+        >
+
+          <div className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center">
+
+            <FaPhoneAlt className="text-sm" />
+
+          </div>
+
+          <div>
+
+            <p className="text-[11px] uppercase tracking-[0.18em] text-slate-400">
+              Admission Help
+            </p>
+
+            <p className="font-semibold text-sm mt-1">
+              +91 8053678711
+            </p>
+
+          </div>
+
+        </motion.a>
+
+        {/* ================================================= */}
+        {/* SCROLL TOP */}
+        {/* ================================================= */}
+
         <AnimatePresence>
-          {showScroll && (
+
+          {showScrollTop && (
+
             <motion.button
-              initial={{ opacity: 0, scale: 0.5 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.5 }}
+              initial={{
+                opacity: 0,
+                scale: 0.8,
+              }}
+              animate={{
+                opacity: 1,
+                scale: 1,
+              }}
+              exit={{
+                opacity: 0,
+                scale: 0.8,
+              }}
               onClick={scrollTop}
-              className="w-11 h-11 rounded-full bg-white shadow-premium border border-gray-100 flex items-center justify-center text-royal-800 hover:bg-royal-50 transition-colors"
+              whileHover={{
+                y: -2,
+              }}
+              whileTap={{
+                scale: 0.96,
+              }}
+              className="w-14 h-14 rounded-2xl bg-white text-slate-900 shadow-2xl border border-slate-100 flex items-center justify-center transition-all duration-300"
               aria-label="Scroll to top"
             >
+
               <FaArrowUp className="text-sm" />
+
             </motion.button>
+
           )}
+
         </AnimatePresence>
 
-        {/* Expandable menu items */}
-        <AnimatePresence>
-          {menuOpen &&
-            menuItems.map((item, i) => (
-              <motion.div
-                key={item.label}
-                initial={{ opacity: 0, y: 20, scale: 0.7 }}
-                animate={{ opacity: 1, y: 0, scale: 1 }}
-                exit={{ opacity: 0, y: 20, scale: 0.7 }}
-                transition={{ delay: i * 0.07 }}
-                className="flex items-center gap-3"
-              >
-                <span className="bg-white text-xs font-semibold text-royal-900 px-3 py-1.5 rounded-full shadow-md whitespace-nowrap">
-                  {item.label}
-                </span>
-                {item.href ? (
-                  <a
-                    href={item.href}
-                    target={item.href.startsWith('http') ? '_blank' : undefined}
-                    rel="noopener noreferrer"
-                    className={`w-12 h-12 rounded-full ${item.color} text-white flex items-center justify-center text-lg shadow-lg hover:scale-110 transition-transform`}
-                  >
-                    {item.icon}
-                  </a>
-                ) : (
-                  <button
-                    onClick={item.onClick}
-                    className={`w-12 h-12 rounded-full ${item.color} text-white flex items-center justify-center text-lg shadow-lg hover:scale-110 transition-transform`}
-                  >
-                    {item.icon}
-                  </button>
-                )}
-              </motion.div>
-            ))}
-        </AnimatePresence>
-
-        {/* Main FAB toggle */}
-        <motion.button
-          whileHover={{ scale: 1.1 }}
-          whileTap={{ scale: 0.95 }}
-          onClick={() => setMenuOpen((v) => !v)}
-          className={`w-14 h-14 rounded-full flex items-center justify-center text-white text-xl shadow-xl transition-all duration-300 ${
-            menuOpen ? 'bg-gray-700 rotate-45' : 'bg-saffron-600'
-          }`}
-          style={!menuOpen ? { animation: 'glow 3s ease-in-out infinite' } : {}}
-          aria-label="Open contact menu"
-        >
-          {menuOpen ? <FaTimes /> : <FaPlus />}
-        </motion.button>
       </div>
 
-      {/* WhatsApp always visible bottom-right on desktop */}
-      <a
-        href="https://wa.me/919999999999?text=Namaste%21%20Mujhe%20Vidya%20Dham%20Mandir%20ke%20baare%20mein%20jaankari%20chahiye."
-        target="_blank"
-        rel="noopener noreferrer"
-        className="hidden lg:flex fixed bottom-8 left-8 z-50 items-center gap-3 bg-green-500 text-white pl-4 pr-5 py-3 rounded-full shadow-xl hover:bg-green-600 transition-all duration-200 hover:scale-105 whatsapp-pulse"
-        aria-label="WhatsApp"
-      >
-        <FaWhatsapp className="text-2xl" />
-        <span className="text-sm font-bold">WhatsApp Us</span>
-      </a>
     </>
   )
 }

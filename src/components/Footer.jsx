@@ -1,201 +1,506 @@
+import logo from "../assets/logo.webp"
 import React from 'react'
 import { motion } from 'framer-motion'
-import { FaWhatsapp, FaInstagram, FaYoutube, FaGithub, FaPhone } from 'react-icons/fa'
+
+import {
+  FaWhatsapp,
+  FaInstagram,
+  FaYoutube,
+  FaPhoneAlt,
+  FaEnvelope,
+  FaMapMarkerAlt,
+} from 'react-icons/fa'
+
+/* ===================================================== */
+/* DATA */
+/* ===================================================== */
+
+const quickLinks = [
+  {
+    label: 'Home',
+    href: '#hero',
+  },
+  {
+    label: 'About',
+    href: '#about',
+  },
+  {
+    label: 'Programs',
+    href: '#courses',
+  },
+  {
+    label: 'Gallery',
+    href: '#gallery',
+  },
+  {
+    label: 'Testimonials',
+    href: '#testimonials',
+  },
+]
+
+const resources = [
+  {
+    label: 'NEET Biology Guidance',
+    href: '#courses',
+  },
+  {
+    label: 'NCERT Learning',
+    href: '#about',
+  },
+  {
+    label: 'Student Mentorship',
+    href: '#contact',
+  },
+  {
+    label: 'Free Counselling',
+    href: '#contact',
+  },
+]
+
+const socialLinks = [
+  {
+    icon: FaInstagram,
+    href: 'https://instagram.com/prashantsirbiology',
+    label: 'Instagram',
+  },
+  {
+    icon: FaYoutube,
+    href: 'https://youtube.com/@prashantsirpalwal',
+    label: 'YouTube',
+  },
+  {
+    icon: FaWhatsapp,
+    href: 'https://wa.me/918053678711',
+    label: 'WhatsApp',
+  },
+]
+
+/* ===================================================== */
+/* COMPONENT */
+/* ===================================================== */
 
 export default function Footer() {
+
   const currentYear = new Date().getFullYear()
 
-  const quickLinks = [
-    { label: 'Home', href: '#hero' },
-    { label: 'About', href: '#about' },
-    { label: 'Courses', href: '#courses' },
-    { label: 'Gallery', href: '#gallery' },
-    { label: 'Contact', href: '#contact' },
-  ]
-
-  const resources = [
-    { label: 'NEET Guide', href: '#courses' },
-    { label: 'Board Preparation', href: '#courses' },
-    { label: 'Study Tips', href: '#about' },
-    { label: 'Success Stories', href: '#testimonials' },
-  ]
-
   return (
-    <footer className="bg-royal-pattern text-white relative">
-      {/* Decorative top border */}
-      <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-saffron-500 via-orange-400 to-saffron-500" />
+    <footer
+      className="relative overflow-hidden bg-[#0b1120] text-white"
+      aria-label="Footer"
+    >
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-8 py-16 lg:py-20">
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
-          {/* Brand section */}
+      {/* ===================================================== */}
+      {/* BACKGROUND */}
+      {/* ===================================================== */}
+
+      <div className="absolute inset-0 pointer-events-none">
+
+        <div className="absolute top-0 left-0 w-[500px] h-[500px] bg-orange-500/10 rounded-full blur-3xl"></div>
+
+        <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-blue-500/10 rounded-full blur-3xl"></div>
+
+      </div>
+
+      {/* ===================================================== */}
+      {/* TOP BORDER */}
+      {/* ===================================================== */}
+
+      <div className="h-[1px] w-full bg-gradient-to-r from-transparent via-orange-400/50 to-transparent"></div>
+
+      {/* ===================================================== */}
+      {/* MAIN */}
+      {/* ===================================================== */}
+
+      <div className="container-custom relative z-10 py-20">
+
+        <div className="grid lg:grid-cols-[1.4fr_1fr_1fr_1.2fr] gap-14">
+
+          {/* ===================================================== */}
+          {/* BRAND */}
+          {/* ===================================================== */}
+
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="lg:col-span-1"
+            initial={{
+              opacity: 0,
+              y: 20,
+            }}
+            whileInView={{
+              opacity: 1,
+              y: 0,
+            }}
+            viewport={{ once: true }}
+            transition={{
+              duration: 0.7,
+            }}
           >
-            <div className="flex items-center gap-3 mb-4">
-              <div className="w-12 h-12 rounded-full bg-gradient-to-br from-saffron-400 to-saffron-700 flex items-center justify-center text-white text-xl font-bold shadow-saffron">
-                🕉
+
+            {/* Logo */}
+            <div className="flex items-center gap-4">
+
+              <div className="w-14 h-14 rounded-2xl bg-orange-500 flex items-center overflow-hidden justify-center shadow-lg shadow-orange-500/20">
+
+                <img src={logo} alt="" />
+
               </div>
+
               <div>
-                <h3 className="font-display font-bold text-white text-base">
-                  VIDYA DHAM MANDIR
-                </h3>
-                <p className="text-saffron-300 text-xs font-semibold tracking-wider">
-                  VIDYA DAAN, MAHA DAAN
+
+                <h2 className="text-xl font-bold tracking-tight text-white">
+                  Vidya Dham Mandir
+                </h2>
+
+                <p className="text-sm text-orange-300 mt-1 tracking-wide">
+                  Education Built Around Students
                 </p>
+
               </div>
+
             </div>
-            <p className="text-blue-200 text-sm mb-6 leading-relaxed">
-              "Education for everyone — built with purpose, not business."
+
+            {/* Description */}
+            <p className="mt-8 text-slate-300 leading-8 max-w-md">
+
+              Vidya Dham Mandir is a student-first educational initiative
+              focused on free learning support, NEET Biology guidance,
+              NCERT foundation learning, and mentorship for students
+              across Haryana.
+
             </p>
-            <p className="text-blue-300 text-xs">
-              ✓ 100% FREE Education
-              <br />
-              ✓ NEET Specialized Guidance
-              <br />
-              ✓ Hinglish Medium Teaching
-            </p>
+
+            {/* Trust */}
+            <div className="mt-8 space-y-3">
+
+              {[
+                'Free educational support for students',
+                'NEET Biology and NCERT focused learning',
+                'Personal mentorship and guidance',
+              ].map((item) => (
+
+                <div
+                  key={item}
+                  className="flex items-start gap-3"
+                >
+
+                  <div className="w-2 h-2 rounded-full bg-orange-400 mt-3"></div>
+
+                  <p className="text-sm text-slate-300 leading-7">
+                    {item}
+                  </p>
+
+                </div>
+
+              ))}
+
+            </div>
+
           </motion.div>
 
-          {/* Quick Links */}
+          {/* ===================================================== */}
+          {/* QUICK LINKS */}
+          {/* ===================================================== */}
+
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.1 }}
+            initial={{
+              opacity: 0,
+              y: 20,
+            }}
+            whileInView={{
+              opacity: 1,
+              y: 0,
+            }}
+            viewport={{ once: true }}
+            transition={{
+              duration: 0.7,
+              delay: 0.1,
+            }}
           >
-            <h4 className="font-bold text-white text-lg mb-4">Quick Links</h4>
-            <ul className="space-y-2">
+
+            <h3 className="text-lg font-semibold text-white">
+              Quick Links
+            </h3>
+
+            <div className="w-12 h-[2px] bg-orange-400 rounded-full mt-4 mb-8"></div>
+
+            <ul className="space-y-5">
+
               {quickLinks.map((link) => (
+
                 <li key={link.href}>
+
                   <a
                     href={link.href}
-                    className="text-blue-200 hover:text-saffron-300 text-sm transition-colors"
+                    className="text-slate-300 hover:text-orange-300 transition-colors duration-300 text-sm"
                   >
+
                     {link.label}
+
                   </a>
+
                 </li>
+
               ))}
+
             </ul>
+
           </motion.div>
 
-          {/* Resources */}
+          {/* ===================================================== */}
+          {/* RESOURCES */}
+          {/* ===================================================== */}
+
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
+            initial={{
+              opacity: 0,
+              y: 20,
+            }}
+            whileInView={{
+              opacity: 1,
+              y: 0,
+            }}
+            viewport={{ once: true }}
+            transition={{
+              duration: 0.7,
+              delay: 0.2,
+            }}
           >
-            <h4 className="font-bold text-white text-lg mb-4">Resources</h4>
-            <ul className="space-y-2">
-              {resources.map((link) => (
-                <li key={link.href}>
+
+            <h3 className="text-lg font-semibold text-white">
+              Learning Resources
+            </h3>
+
+            <div className="w-12 h-[2px] bg-orange-400 rounded-full mt-4 mb-8"></div>
+
+            <ul className="space-y-5">
+
+              {resources.map((resource) => (
+
+                <li key={resource.label}>
+
                   <a
-                    href={link.href}
-                    className="text-blue-200 hover:text-saffron-300 text-sm transition-colors"
+                    href={resource.href}
+                    className="text-slate-300 hover:text-orange-300 transition-colors duration-300 text-sm leading-7"
                   >
-                    {link.label}
+
+                    {resource.label}
+
                   </a>
+
                 </li>
+
               ))}
+
             </ul>
+
           </motion.div>
 
-          {/* Contact Info */}
+          {/* ===================================================== */}
+          {/* CONTACT */}
+          {/* ===================================================== */}
+
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.3 }}
+            initial={{
+              opacity: 0,
+              y: 20,
+            }}
+            whileInView={{
+              opacity: 1,
+              y: 0,
+            }}
+            viewport={{ once: true }}
+            transition={{
+              duration: 0.7,
+              delay: 0.3,
+            }}
           >
-            <h4 className="font-bold text-white text-lg mb-4">Contact</h4>
-            <div className="space-y-3">
+
+            <h3 className="text-lg font-semibold text-white">
+              Contact Information
+            </h3>
+
+            <div className="w-12 h-[2px] bg-orange-400 rounded-full mt-4 mb-8"></div>
+
+            <div className="space-y-6">
+
+              {/* Phone */}
               <a
-                href="tel:+919999999999"
-                className="flex items-center gap-2 text-blue-200 hover:text-saffron-300 text-sm transition-colors"
+                href="tel:+918053678711"
+                className="flex items-start gap-4 group"
               >
-                <FaPhone className="text-saffron-400" />
-                +91 99999 99999
+
+                <div className="w-11 h-11 rounded-2xl bg-white/5 border border-white/5 flex items-center justify-center group-hover:bg-orange-500 transition-colors duration-300">
+
+                  <FaPhoneAlt className="text-orange-300 text-sm" />
+
+                </div>
+
+                <div>
+
+                  <p className="text-sm text-slate-400">
+                    Call Us
+                  </p>
+
+                  <p className="text-white font-medium mt-1">
+                    +91 8053678711
+                  </p>
+
+                  <p className="text-white font-medium">
+                    +91 8950052463
+                  </p>
+
+                </div>
+
               </a>
+
+              {/* Email */}
               <a
-                href="https://wa.me/919999999999"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-2 text-blue-200 hover:text-saffron-300 text-sm transition-colors"
+                href="mailto:prashantsir2107@gmail.com"
+                className="flex items-start gap-4 group"
               >
-                <FaWhatsapp className="text-green-400" />
-                WhatsApp Us
+
+                <div className="w-11 h-11 rounded-2xl bg-white/5 border border-white/5 flex items-center justify-center group-hover:bg-orange-500 transition-colors duration-300">
+
+                  <FaEnvelope className="text-orange-300 text-sm" />
+
+                </div>
+
+                <div>
+
+                  <p className="text-sm text-slate-400">
+                    Email Address
+                  </p>
+
+                  <p className="text-white font-medium mt-1 break-all">
+                    prashantsir2107@gmail.com
+                  </p>
+
+                </div>
+
               </a>
-              <p className="text-blue-200 text-sm">
-                Palwal, Haryana - 121102
-              </p>
+
+              {/* Location */}
+              <div className="flex items-start gap-4">
+
+                <div className="w-11 h-11 rounded-2xl bg-white/5 border border-white/5 flex items-center justify-center">
+
+                  <FaMapMarkerAlt className="text-orange-300 text-sm" />
+
+                </div>
+
+                <div>
+
+                  <p className="text-sm text-slate-400">
+                    Location
+                  </p>
+
+                  <p className="text-white font-medium mt-1">
+                    Palwal, Haryana
+                  </p>
+
+                  <p className="text-slate-400 text-sm">
+                    India • 121102
+                  </p>
+
+                </div>
+
+              </div>
+
             </div>
+
           </motion.div>
+
         </div>
 
-        {/* Divider */}
-        <div className="h-px bg-gradient-to-r from-saffron-500/20 via-saffron-500/40 to-saffron-500/20 my-8" />
+        {/* ===================================================== */}
+        {/* DIVIDER */}
+        {/* ===================================================== */}
 
-        {/* Social & Bottom */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.4 }}
-          className="flex flex-col sm:flex-row items-center justify-between gap-6"
-        >
-          {/* Social Links */}
-          <div className="flex gap-4">
-            {[
-              { icon: FaInstagram, link: 'https://instagram.com/vidyadhammandir', label: 'Instagram' },
-              { icon: FaYoutube, link: 'https://youtube.com/@vidyadhammandir', label: 'YouTube' },
-              { icon: FaWhatsapp, link: 'https://wa.me/919999999999', label: 'WhatsApp' },
-            ].map((social, i) => {
+        <div className="w-full h-[1px] bg-white/10 my-14"></div>
+
+        {/* ===================================================== */}
+        {/* BOTTOM */}
+        {/* ===================================================== */}
+
+        <div className="flex flex-col lg:flex-row items-center justify-between gap-8">
+
+          {/* Social */}
+          <div className="flex items-center gap-4">
+
+            {socialLinks.map((social, index) => {
+
               const Icon = social.icon
+
               return (
                 <motion.a
-                  key={i}
-                  href={social.link}
+                  key={index}
+                  href={social.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  whileHover={{ scale: 1.1, y: -4 }}
-                  whileTap={{ scale: 0.95 }}
-                  className="w-10 h-10 rounded-full bg-saffron-600/20 hover:bg-saffron-500 flex items-center justify-center text-saffron-300 hover:text-white transition-all duration-200"
-                  title={social.label}
+                  whileHover={{
+                    y: -3,
+                  }}
+                  whileTap={{
+                    scale: 0.96,
+                  }}
+                  className="w-12 h-12 rounded-2xl bg-white/5 border border-white/5 flex items-center justify-center text-slate-300 hover:bg-orange-500 hover:text-white transition-all duration-300"
+                  aria-label={social.label}
                 >
+
                   <Icon className="text-lg" />
+
                 </motion.a>
               )
             })}
+
           </div>
 
-          {/* CTA Button */}
+          {/* CTA */}
           <a
-            href="https://wa.me/919999999999"
+            href="https://wa.me/918053678711"
             target="_blank"
             rel="noopener noreferrer"
-            className="bg-gradient-to-r from-saffron-500 to-orange-600 hover:from-saffron-600 hover:to-orange-700 text-white font-bold px-6 py-3 rounded-full flex items-center gap-2 transition-all duration-200 shadow-saffron hover:shadow-lg"
+            className="btn-primary"
           >
-            <FaWhatsapp />
-            Connect on WhatsApp
-          </a>
-        </motion.div>
 
-        {/* Copyright & Credits */}
-        <div className="mt-12 pt-8 border-t border-saffron-500/20">
-          <p className="text-blue-300 text-xs text-center mb-4">
-            © {currentYear} Vidya Dham Mandir. Education for everyone.
-          </p>
-          <p className="text-blue-300 text-xs text-center">
-            🎨 Designed & Developed by <span className="font-bold text-saffron-300">Lokesh</span> •{' '}
-            <span className="font-bold text-saffron-300">GrowUpCraft</span>
-          </p>
-          <p className="text-blue-400 text-xs text-center mt-4 italic">
-            "विद्या दान, महा दान" — Education is the greatest gift we can give.
-          </p>
+            <FaWhatsapp />
+
+            Connect on WhatsApp
+
+          </a>
+
         </div>
+
+        {/* ===================================================== */}
+        {/* COPYRIGHT */}
+        {/* ===================================================== */}
+
+        <div className="mt-14 pt-10 border-t border-white/10 text-center">
+
+          <p className="text-slate-400 text-sm leading-7">
+
+            © {currentYear} Vidya Dham Mandir. All rights reserved.
+
+          </p>
+
+          <p className="mt-4 text-slate-500 text-sm leading-7 max-w-2xl mx-auto">
+
+            Education focused on mentorship, accessibility,
+            and meaningful student growth.
+
+          </p>
+
+          <p className="mt-6 text-slate-500 text-sm">
+
+            Designed & Developed by
+            <span className="text-orange-300 font-medium">
+              {' '}Lokesh • GrowUpCraft
+            </span>
+
+          </p>
+
+        </div>
+
       </div>
 
-      {/* Bottom gradient */}
-      <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-saffron-600 via-orange-400 to-saffron-600" />
     </footer>
   )
 }

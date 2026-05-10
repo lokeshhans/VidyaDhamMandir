@@ -1,162 +1,452 @@
-import React, { useState, useEffect } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
-import { FaBars, FaTimes, FaWhatsapp } from 'react-icons/fa'
+import logo from "../assets/logo.webp"
+import React, {
+  useEffect,
+  useState,
+} from 'react'
+
+import {
+  motion,
+  AnimatePresence,
+} from 'framer-motion'
+
+import {
+  FaBars,
+  FaTimes,
+  FaWhatsapp,
+  FaArrowRight,
+} from 'react-icons/fa'
+
 import { useApp } from '../context/AppContext'
 
+/* ===================================================== */
+/* NAV LINKS */
+/* ===================================================== */
+
 const navLinks = [
-  { label: 'Home', href: '#hero' },
-  { label: 'About', href: '#about' },
-  { label: 'Courses', href: '#courses' },
-  { label: 'Gallery', href: '#gallery' },
-  { label: 'Testimonials', href: '#testimonials' },
-  { label: 'Contact', href: '#contact' },
+  {
+    label: 'Home',
+    href: '#hero',
+  },
+
+  {
+    label: 'About',
+    href: '#about',
+  },
+
+  {
+    label: 'Programs',
+    href: '#courses',
+  },
+
+  {
+    label: 'Gallery',
+    href: '#gallery',
+  },
+
+  {
+    label: 'Testimonials',
+    href: '#testimonials',
+  },
+
+  {
+    label: 'Contact',
+    href: '#contact',
+  },
 ]
 
+/* ===================================================== */
+/* COMPONENT */
+/* ===================================================== */
+
 export default function Navbar() {
+
   const [scrolled, setScrolled] = useState(false)
+
   const { state, dispatch } = useApp()
 
+  /* ===================================================== */
+  /* SCROLL */
+  /* ===================================================== */
+
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 40)
-    window.addEventListener('scroll', onScroll)
-    return () => window.removeEventListener('scroll', onScroll)
+
+    const handleScroll = () => {
+
+      setScrolled(window.scrollY > 20)
+
+    }
+
+    window.addEventListener('scroll', handleScroll)
+
+    return () =>
+      window.removeEventListener(
+        'scroll',
+        handleScroll
+      )
+
   }, [])
 
-  const scrollTo = (href) => {
-    dispatch({ type: 'CLOSE_MOBILE_MENU' })
-    const el = document.querySelector(href)
-    if (el) el.scrollIntoView({ behavior: 'smooth' })
+  /* ===================================================== */
+  /* SCROLL TO */
+  /* ===================================================== */
+
+  function scrollTo(href) {
+
+    dispatch({
+      type: 'CLOSE_MOBILE_MENU',
+    })
+
+    const element =
+      document.querySelector(href)
+
+    if (element) {
+
+      element.scrollIntoView({
+        behavior: 'smooth',
+      })
+
+    }
+
   }
+
+  /* ===================================================== */
+  /* UI */
+  /* ===================================================== */
 
   return (
     <>
+
+      {/* ================================================= */}
+      {/* NAVBAR */}
+      {/* ================================================= */}
+
       <motion.header
-        initial={{ y: -80 }}
-        animate={{ y: 0 }}
-        transition={{ duration: 0.6, ease: 'easeOut' }}
+        initial={{
+          y: -80,
+        }}
+        animate={{
+          y: 0,
+        }}
+        transition={{
+          duration: 0.6,
+          ease: 'easeOut',
+        }}
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
           scrolled
-            ? 'bg-white/95 backdrop-blur-xl shadow-royal border-b border-orange-100'
+            ? 'bg-white/85 backdrop-blur-2xl border-b border-slate-200 shadow-[0_10px_40px_rgba(15,23,42,0.06)]'
             : 'bg-transparent'
         }`}
       >
-        <div className="max-w-7xl mx-auto px-4 sm:px-8">
-          <div className="flex items-center justify-between h-16 sm:h-20">
-            {/* Logo */}
+
+        <div className="container-custom">
+
+          <div className="flex items-center justify-between h-20">
+
+            {/* ============================================= */}
+            {/* LOGO */}
+            {/* ============================================= */}
+
             <motion.a
               href="#hero"
-              onClick={(e) => { e.preventDefault(); scrollTo('#hero') }}
-              className="flex items-center gap-3"
-              whileHover={{ scale: 1.02 }}
+              onClick={(e) => {
+                e.preventDefault()
+                scrollTo('#hero')
+              }}
+              whileHover={{
+                scale: 1.01,
+              }}
+              className="flex items-center gap-4"
+              aria-label="Vidya Dham Mandir"
             >
-              <div className="w-10 h-10 rounded-full bg-gradient-to-br from-saffron-500 to-saffron-700 flex items-center justify-center text-white font-bold text-lg shadow-saffron">
-                🕉
+
+              {/* Logo */}
+              <div className="relative">
+
+                <div className="w-12 h-12 rounded-2xl overflow-hidden bg-[#0b1120] flex items-center justify-center shadow-xl">
+
+                    <img src={logo} alt="" />
+
+                </div>
+
+                <div className="absolute -inset-1 rounded-2xl bg-orange-500/20 blur-xl"></div>
+
               </div>
+
+              {/* Text */}
               <div>
-                <p className="font-display font-bold text-green-400 text-sm sm:text-base leading-tight">
-                  VIDYA DHAM MANDIR
+
+                <h1 className={`font-bold tracking-tight leading-none transition-colors duration-300 ${
+                  scrolled
+                    ? 'text-slate-900'
+                    : 'text-white'
+                }`}>
+
+                  Vidya Dham Mandir
+
+                </h1>
+
+                <p className={`text-xs tracking-[0.18em] uppercase mt-2 transition-colors duration-300 ${
+                  scrolled
+                    ? 'text-orange-600'
+                    : 'text-orange-300'
+                }`}>
+
+                  Free Educational Initiative
+
                 </p>
-                <p className="text-saffron-600 text-xs font-medium tracking-wider">
-                  VIDYA DAAN, MAHA DAAN
-                </p>
+
               </div>
+
             </motion.a>
 
-            {/* Desktop Nav */}
-            <nav className="hidden lg:flex items-center gap-8">
+            {/* ============================================= */}
+            {/* DESKTOP NAV */}
+            {/* ============================================= */}
+
+            <nav className="hidden lg:flex items-center gap-10">
+
               {navLinks.map((link) => (
+
                 <button
                   key={link.href}
-                  onClick={() => scrollTo(link.href)}
-                  className="text-black hover:text-saffron-600 text-sm font-medium transition-colors duration-200 relative group"
+                  onClick={() =>
+                    scrollTo(link.href)
+                  }
+                  className={`relative text-sm font-medium transition-colors duration-300 group ${
+                    scrolled
+                      ? 'text-slate-700 hover:text-orange-600'
+                      : 'text-slate-200 hover:text-white'
+                  }`}
                 >
+
                   {link.label}
-                  <span className="absolute -bottom-0.5 left-0 w-0 h-0.5 bg-saffron-500 group-hover:w-full transition-all duration-300" />
+
+                  {/* Line */}
+                  <span className="absolute left-0 -bottom-2 w-0 h-[2px] bg-orange-500 transition-all duration-300 group-hover:w-full"></span>
+
                 </button>
+
               ))}
+
             </nav>
 
-            {/* Right CTA */}
-            <div className="hidden lg:flex items-center gap-3">
+            {/* ============================================= */}
+            {/* RIGHT CTA */}
+            {/* ============================================= */}
+
+            <div className="hidden lg:flex items-center gap-4">
+
+              {/* WhatsApp */}
               <a
-                href="https://wa.me/919999999999?text=Hello%2C%20I%20want%20to%20know%20about%20admission%20at%20Vidya%20Dham%20Mandir"
+                href="https://wa.me/918053678711"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-2 bg-green-500 hover:bg-green-600 text-white text-sm font-semibold px-4 py-2 rounded-full transition-all duration-200 shadow-sm"
+                className={`inline-flex items-center gap-3 px-5 py-3 rounded-full text-sm font-semibold transition-all duration-300 ${
+                  scrolled
+                    ? 'bg-green-500 hover:bg-green-600 text-white'
+                    : 'bg-white/10 border border-white/10 backdrop-blur-xl text-white hover:bg-white hover:text-slate-900'
+                }`}
               >
-                <FaWhatsapp className="text-base" />
+
+                <FaWhatsapp />
+
                 WhatsApp
+
               </a>
+
+              {/* Admission */}
               <button
-                onClick={() => scrollTo('#admission')}
-                className="btn-saffron text-xs py-2 px-5"
+                onClick={() =>
+                  scrollTo('#admission')
+                }
+                className="btn-primary"
               >
+
                 Join Free
+
+                <FaArrowRight className="text-xs" />
+
               </button>
+
             </div>
 
-            {/* Mobile menu toggle */}
+            {/* ============================================= */}
+            {/* MOBILE BUTTON */}
+            {/* ============================================= */}
+
             <button
-              onClick={() => dispatch({ type: 'TOGGLE_MOBILE_MENU' })}
-              className="lg:hidden text-royal-900 p-2"
-              aria-label="Toggle menu"
+              onClick={() =>
+                dispatch({
+                  type: 'TOGGLE_MOBILE_MENU',
+                })
+              }
+              className={`lg:hidden w-12 h-12 rounded-2xl flex items-center justify-center transition-all duration-300 ${
+                scrolled
+                  ? 'bg-slate-100 text-slate-900'
+                  : 'bg-white/10 backdrop-blur-xl border border-white/10 text-white'
+              }`}
+              aria-label="Toggle navigation"
             >
-              {state.mobileMenuOpen ? <FaTimes size={22} /> : <FaBars size={22} />}
+
+              {state.mobileMenuOpen
+                ? <FaTimes size={18} />
+                : <FaBars size={18} />}
+
             </button>
+
           </div>
+
         </div>
+
       </motion.header>
 
-      {/* Mobile Menu */}
+      {/* ================================================= */}
+      {/* MOBILE MENU */}
+      {/* ================================================= */}
+
       <AnimatePresence>
+
         {state.mobileMenuOpen && (
+
           <motion.div
-            initial={{ opacity: 0, x: '100%' }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: '100%' }}
-            transition={{ type: 'spring', stiffness: 300, damping: 30 }}
-            className="fixed inset-0 z-40 bg-white flex flex-col pt-24 px-8"
+            initial={{
+              opacity: 0,
+              y: -20,
+            }}
+            animate={{
+              opacity: 1,
+              y: 0,
+            }}
+            exit={{
+              opacity: 0,
+              y: -20,
+            }}
+            transition={{
+              duration: 0.3,
+            }}
+            className="fixed inset-0 z-40 bg-[#071028] lg:hidden overflow-y-auto"
           >
-            <div className="absolute top-5 right-6 text-center">
-              <p className="text-xs text-saffron-600 font-bold tracking-widest">FREE EDUCATION</p>
-              <p className="text-xs text-royal-400">Palwal, Haryana</p>
+
+            {/* Background */}
+            <div className="absolute inset-0 overflow-hidden">
+
+              <div className="absolute top-0 left-0 w-[400px] h-[400px] bg-orange-500/10 rounded-full blur-3xl"></div>
+
+              <div className="absolute bottom-0 right-0 w-[400px] h-[400px] bg-blue-500/10 rounded-full blur-3xl"></div>
+
             </div>
-            {navLinks.map((link, i) => (
-              <motion.button
-                key={link.href}
-                initial={{ opacity: 0, x: 30 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: i * 0.08 }}
-                onClick={() => scrollTo(link.href)}
-                className="text-left py-4 border-b border-orange-50 text-royal-800 text-2xl font-display font-semibold hover:text-saffron-600 transition-colors"
-              >
-                {link.label}
-              </motion.button>
-            ))}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.5 }}
-              className="mt-8 flex flex-col gap-4"
-            >
-              <a
-                href="https://wa.me/919999999999"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center justify-center gap-2 bg-green-500 text-white font-bold py-4 rounded-2xl text-lg"
-              >
-                <FaWhatsapp /> WhatsApp Now
-              </a>
-              <button
-                onClick={() => scrollTo('#admission')}
-                className="btn-saffron justify-center py-4 text-base rounded-2xl"
-              >
-                Join Free Classes
-              </button>
-            </motion.div>
+
+            {/* Content */}
+            <div className="relative z-10 min-h-screen flex flex-col px-8 pt-28 pb-10">
+
+              {/* Label */}
+              <div className="mb-10">
+
+                <p className="text-orange-300 uppercase tracking-[0.18em] text-xs font-semibold">
+
+                  Vidya Dham Mandir
+
+                </p>
+
+                <h2 className="text-white text-3xl font-bold tracking-tight mt-4">
+
+                  Student Focused Learning
+
+                </h2>
+
+              </div>
+
+              {/* Links */}
+              <div className="flex flex-col">
+
+                {navLinks.map((link, index) => (
+
+                  <motion.button
+                    key={link.href}
+                    initial={{
+                      opacity: 0,
+                      x: 20,
+                    }}
+                    animate={{
+                      opacity: 1,
+                      x: 0,
+                    }}
+                    transition={{
+                      delay: index * 0.06,
+                    }}
+                    onClick={() =>
+                      scrollTo(link.href)
+                    }
+                    className="flex items-center justify-between border-b border-white/10 py-6 text-left"
+                  >
+
+                    <span className="text-white text-2xl font-semibold tracking-tight">
+
+                      {link.label}
+
+                    </span>
+
+                    <FaArrowRight className="text-orange-400 text-sm" />
+
+                  </motion.button>
+
+                ))}
+
+              </div>
+
+              {/* Bottom CTA */}
+              <div className="mt-auto pt-12 space-y-4">
+
+                {/* WhatsApp */}
+                <a
+                  href="https://wa.me/918053678711"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center justify-center gap-3 rounded-2xl bg-green-500 text-white py-5 font-semibold text-lg"
+                >
+
+                  <FaWhatsapp />
+
+                  Connect on WhatsApp
+
+                </a>
+
+                {/* Join */}
+                <button
+                  onClick={() =>
+                    scrollTo('#admission')
+                  }
+                  className="w-full flex items-center justify-center gap-3 rounded-2xl bg-orange-500 text-white py-5 font-semibold text-lg"
+                >
+
+                  Join Free Classes
+
+                  <FaArrowRight className="text-sm" />
+
+                </button>
+
+                {/* Footer */}
+                <div className="pt-8 text-center">
+
+                  <p className="text-slate-400 text-sm leading-7">
+
+                    Free educational support focused on
+                    mentorship, confidence, and meaningful learning.
+
+                  </p>
+
+                </div>
+
+              </div>
+
+            </div>
+
           </motion.div>
+
         )}
+
       </AnimatePresence>
+
     </>
   )
 }

@@ -1,316 +1,522 @@
 import React, { useState } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
+
+import {
+  motion,
+  AnimatePresence,
+} from 'framer-motion'
+
 import { useInView } from 'react-intersection-observer'
-import { FaChevronRight } from 'react-icons/fa'
+
+import {
+  FaArrowRight,
+  FaCheckCircle,
+} from 'react-icons/fa'
+
+/* ===================================================== */
+/* DATA */
+/* ===================================================== */
 
 const courses = [
   {
     title: 'NEET Biology',
-    subtitle: 'Advanced Medical Preparation',
-    description: 'Complete NEET Biology with detailed explanations in Hinglish. Covering all chapters from NCERT, previous year questions, and mock tests.',
-    students: '150+',
-    icon: '🧬',
-    color: 'from-rose-500 to-pink-600',
+    category: 'Medical Entrance Preparation',
+    students: '150+ Students',
+    description:
+      'Structured NEET Biology preparation focused on NCERT mastery, conceptual clarity, mock tests, and mentorship.',
+
     benefits: [
       'Complete NCERT syllabus coverage',
-      'Chapter-wise detailed notes',
-      'Previous year solved papers',
-      'Weekly mock tests & analysis',
-      'One-on-one doubt sessions',
-      'Personal mentorship',
+      'Mock tests and performance analysis',
+      'Previous year NEET questions',
+      'Personal mentorship support',
+      'Concept-focused learning',
+      'Doubt clearing sessions',
     ],
+
     parents: [
-      'Hinglish medium — concepts are clear',
-      'Affordable — 100% FREE',
-      'Personal attention to every student',
-      'Regular progress updates',
+      'Student-friendly Hinglish teaching',
+      'Regular academic guidance',
+      'Supportive learning environment',
+      'Focused exam preparation',
     ],
   },
+
   {
-    title: 'Class 11-12 Science',
-    subtitle: 'Board Exam Excellence',
-    description: 'Comprehensive Science coaching for Class 11 & 12 boards. Physics, Chemistry, and Biology integrated learning approach.',
-    students: '200+',
-    icon: '🔬',
-    color: 'from-blue-500 to-cyan-600',
+    title: 'Class 11–12 Science',
+    category: 'Board Exam Preparation',
+    students: '200+ Students',
+    description:
+      'Comprehensive support for Physics, Chemistry, and Biology with a focus on conceptual understanding and board performance.',
+
     benefits: [
-      'Board syllabus aligned',
-      'Conceptual clarity focus',
-      'Practicals & experiments explained',
-      'Previous year board papers',
-      'Small batch size — personalized',
-      'Weekend revision classes',
+      'Board aligned preparation',
+      'Conceptual learning approach',
+      'Revision and test practice',
+      'Weekly assessment support',
+      'Small batch mentorship',
+      'Academic progress tracking',
     ],
+
     parents: [
-      'Strong board performance record',
-      'Character development included',
-      'Discipline & focus inculcated',
-      'Career guidance provided',
+      'Strong academic foundation',
+      'Disciplined learning support',
+      'Student confidence development',
+      'Future career guidance',
     ],
   },
+
   {
     title: 'NCERT Foundation',
-    subtitle: 'Class 9-10 Basics',
-    description: 'Strong foundation building for Class 9 & 10 students. Clear concepts in Mathematics, Science, and Hindi.',
-    students: '180+',
-    icon: '📚',
-    color: 'from-green-500 to-emerald-600',
+    category: 'Class 9–10 Support',
+    students: '180+ Students',
+    description:
+      'Foundation-focused learning designed to strengthen Science, Mathematics, and conceptual clarity for future academic growth.',
+
     benefits: [
-      'Concept-based learning',
-      'Regular homework & assignments',
-      'Monthly progress tests',
-      'Doubt clearing sessions',
-      'Study material provided',
-      'Parent-teacher meetings',
+      'Strong conceptual base',
+      'NCERT focused learning',
+      'Regular assignments',
+      'Monthly progress evaluations',
+      'Interactive doubt sessions',
+      'Study material support',
     ],
+
     parents: [
-      'Strong foundation for future',
-      'Confidence building approach',
-      'Affordable rates',
-      'Safe, supportive learning environment',
+      'Builds future readiness',
+      'Improves learning confidence',
+      'Safe academic environment',
+      'Consistent mentorship',
     ],
   },
+
   {
     title: 'Personality Development',
-    subtitle: 'Beyond Books',
-    description: 'Holistic development of students. Communication, confidence, time management, and leadership skills.',
-    students: '100+',
-    icon: '✨',
-    color: 'from-yellow-500 to-amber-600',
+    category: 'Confidence & Communication',
+    students: '100+ Students',
+    description:
+      'Programs focused on communication, confidence building, discipline, leadership, and long-term student growth.',
+
     benefits: [
-      'Confidence building sessions',
       'Public speaking practice',
-      'Interview preparation',
-      'Personality enhancement',
-      'Career counseling',
-      'Motivation workshops',
+      'Communication improvement',
+      'Confidence building',
+      'Career counselling',
+      'Leadership activities',
+      'Motivation sessions',
     ],
+
     parents: [
-      'Develops all-round personality',
+      'Supports holistic development',
       'Improves communication skills',
-      'Builds confidence for interviews',
-      'Guides future path',
-    ],
-  },
-  {
-    title: 'Revision Classes',
-    subtitle: 'Last-Minute Preparation',
-    description: 'Intensive revision sessions before exams. Shortcuts, important questions, and exam-focused strategies.',
-    students: '250+',
-    icon: '🚀',
-    color: 'from-purple-500 to-indigo-600',
-    benefits: [
-      'Exam-focused strategy',
-      'Important questions list',
-      'Quick revision notes',
-      'Answer writing practice',
-      'Time management tips',
-      'Previous year analysis',
-    ],
-    parents: [
-      'Exam success oriented',
-      'Stress relief sessions',
-      'Confidence boost before exams',
-      'Proven track record',
-    ],
-  },
-  {
-    title: 'Doubt Sessions',
-    subtitle: 'One-on-One Clarification',
-    description: 'Personalized doubt clearing sessions. Any topic, any time, unlimited clarification.',
-    students: '350+',
-    icon: '💬',
-    color: 'from-orange-500 to-red-600',
-    benefits: [
-      'Unlimited doubt clarification',
-      'Flexible timing',
-      'Video call available',
-      'Detailed explanations',
-      'Follow-up notes',
-      'Progress tracking',
-    ],
-    parents: [
-      'Child\'s questions get answers',
-      'Strong conceptual clarity',
-      'No confusion left behind',
-      'Regular feedback provided',
+      'Builds future confidence',
+      'Encourages discipline',
     ],
   },
 ]
 
+/* ===================================================== */
+/* COMPONENT */
+/* ===================================================== */
+
 export default function Courses() {
-  const [selectedCourse, setSelectedCourse] = useState(null)
-  const { ref, inView } = useInView({ threshold: 0.1, triggerOnce: true })
 
-  const container = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: { staggerChildren: 0.1, delayChildren: 0.2 },
-    },
-  }
+  const [activeCourse, setActiveCourse] = useState(null)
 
-  const item = {
-    hidden: { opacity: 0, y: 30 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.6 } },
-  }
+  const { ref, inView } = useInView({
+    threshold: 0.1,
+    triggerOnce: true,
+  })
+
+  /* ===================================================== */
+  /* UI */
+  /* ===================================================== */
 
   return (
-    <section id="courses" ref={ref} className="section-pad bg-warm-white relative overflow-hidden">
-      {/* Decorative elements */}
-      <div className="absolute -top-40 left-1/4 w-80 h-80 bg-royal-900/5 rounded-full blur-3xl" />
+    <section
+      id="courses"
+      ref={ref}
+      className="relative section-pad overflow-hidden bg-[#fffdf9]"
+      aria-labelledby="courses-heading"
+    >
 
-      <div className="relative max-w-7xl mx-auto">
-        {/* Header */}
+      {/* ===================================================== */}
+      {/* BACKGROUND */}
+      {/* ===================================================== */}
+
+      <div className="absolute inset-0 pointer-events-none">
+
+        <div className="absolute top-0 left-0 w-[500px] h-[500px] bg-orange-50 rounded-full blur-3xl opacity-50"></div>
+
+        <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-amber-50 rounded-full blur-3xl opacity-40"></div>
+
+      </div>
+
+      <div className="container-custom relative z-10">
+
+        {/* ===================================================== */}
+        {/* HEADER */}
+        {/* ===================================================== */}
+
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-          className="text-center mb-16"
+          initial={{
+            opacity: 0,
+            y: 30,
+          }}
+          animate={
+            inView
+              ? {
+                  opacity: 1,
+                  y: 0,
+                }
+              : {}
+          }
+          transition={{
+            duration: 0.7,
+          }}
+          className="max-w-4xl mx-auto text-center"
         >
-          <p className="section-label mb-3">हमारे कोर्स</p>
-          <h2 className="section-heading mx-auto max-w-3xl">
-            Courses Built for <span className="text-gradient-saffron">Student Success</span>
+
+          <span className="section-label">
+            Learning Programs
+          </span>
+
+          <h2
+            id="courses-heading"
+            className="section-heading mt-4 text-balance"
+          >
+
+            Academic Programs
+            <span className="text-orange-soft">
+              {' '}Designed Around Student Growth
+            </span>
+
           </h2>
-          <p className="text-gray-600 text-lg mt-4 max-w-2xl mx-auto">
-            From Class 9 NEET preparation to personality development, we cover every aspect of student growth.
+
+          <p className="mt-6 text-lg leading-8 text-slate-600 max-w-3xl mx-auto">
+
+            Structured educational programs focused on conceptual clarity,
+            mentorship, confidence building, and long-term academic success.
+
           </p>
+
         </motion.div>
 
-        {/* Courses grid */}
-        <motion.div
-          variants={container}
-          initial="hidden"
-          animate={inView ? 'visible' : 'hidden'}
-          className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12"
-        >
-          {courses.map((course, i) => (
-            <motion.div
-              key={course.title}
-              variants={item}
-              onClick={() => setSelectedCourse(selectedCourse === i ? null : i)}
-              className="group cursor-pointer"
-            >
-              <div
-                className={`relative h-full glass-card rounded-2xl p-7 overflow-hidden transition-all duration-300 group-hover:shadow-saffron group-hover:-translate-y-2 border-l-4 ${
-                  selectedCourse === i
-                    ? 'ring-2 ring-saffron-500 shadow-saffron'
-                    : 'border-saffron-300'
+        {/* ===================================================== */}
+        {/* GRID */}
+        {/* ===================================================== */}
+
+        <div className="grid lg:grid-cols-2 gap-7 mt-20">
+
+          {courses.map((course, index) => {
+
+            const isOpen = activeCourse === index
+
+            return (
+              <motion.article
+                key={course.title}
+                initial={{
+                  opacity: 0,
+                  y: 30,
+                }}
+                animate={
+                  inView
+                    ? {
+                        opacity: 1,
+                        y: 0,
+                      }
+                    : {}
+                }
+                transition={{
+                  duration: 0.6,
+                  delay: index * 0.08,
+                }}
+                className={`premium-card overflow-hidden transition-all duration-300 ${
+                  isOpen
+                    ? 'border-orange-300'
+                    : ''
                 }`}
               >
-                {/* Gradient background */}
-                <div
-                  className={`absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl ${course.color} opacity-10 rounded-full -mr-16 -mt-8`}
-                />
 
-                {/* Icon */}
-                <div className="relative z-10 text-5xl mb-3">{course.icon}</div>
+                {/* ================================================= */}
+                {/* TOP */}
+                {/* ================================================= */}
 
-                {/* Content */}
-                <div className="relative z-10">
-                  <h3 className="font-display font-bold text-xl text-royal-900 mb-1">
-                    {course.title}
-                  </h3>
-                  <p className="text-saffron-600 text-xs font-semibold mb-2 tracking-wide">
-                    {course.subtitle}
-                  </p>
-                  <p className="text-gray-600 text-sm mb-4 leading-relaxed">
-                    {course.description}
-                  </p>
+                <button
+                  onClick={() =>
+                    setActiveCourse(
+                      isOpen
+                        ? null
+                        : index
+                    )
+                  }
+                  className="w-full text-left"
+                >
 
-                  <div className="flex items-center justify-between pt-4 border-t border-orange-100">
-                    <span className="text-xs font-bold text-saffron-600 tracking-widest">
-                      {course.students} STUDENTS
-                    </span>
-                    <motion.div
-                      animate={{ x: selectedCourse === i ? 4 : 0 }}
-                      className="text-saffron-500"
-                    >
-                      <FaChevronRight />
-                    </motion.div>
+                  {/* Category */}
+                  <div className="inline-flex items-center px-3 py-1 rounded-full bg-orange-50 text-orange-700 text-xs font-semibold tracking-wide uppercase">
+
+                    {course.category}
+
                   </div>
-                </div>
-              </div>
 
-              {/* Expanded details */}
-              <AnimatePresence>
-                {selectedCourse === i && (
-                  <motion.div
-                    initial={{ opacity: 0, height: 0 }}
-                    animate={{ opacity: 1, height: 'auto' }}
-                    exit={{ opacity: 0, height: 0 }}
-                    transition={{ duration: 0.3 }}
-                    className="mt-4 glass-card rounded-2xl p-6 border-t-2 border-saffron-500"
-                  >
-                    <div className="grid sm:grid-cols-2 gap-6">
-                      {/* Student benefits */}
-                      <div>
-                        <h4 className="font-bold text-royal-900 mb-3 flex items-center gap-2">
-                          <span>👨‍🎓</span> Student Benefits
-                        </h4>
-                        <ul className="space-y-2">
-                          {course.benefits.map((benefit) => (
-                            <li key={benefit} className="flex gap-2 text-sm text-gray-700">
-                              <span className="text-green-500 flex-shrink-0">✓</span>
-                              {benefit}
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
+                  {/* Title */}
+                  <div className="flex items-start justify-between gap-6 mt-6">
 
-                      {/* Parent benefits */}
-                      <div>
-                        <h4 className="font-bold text-royal-900 mb-3 flex items-center gap-2">
-                          <span>👨‍👩‍👧</span> Parent Confidence
-                        </h4>
-                        <ul className="space-y-2">
-                          {course.parents.map((parent) => (
-                            <li key={parent} className="flex gap-2 text-sm text-gray-700">
-                              <span className="text-saffron-500 flex-shrink-0">★</span>
-                              {parent}
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
+                    <div>
+
+                      <h3 className="text-3xl font-semibold text-slate-900 leading-tight">
+
+                        {course.title}
+
+                      </h3>
+
+                      <p className="mt-3 text-sm font-medium text-orange-600">
+
+                        {course.students}
+
+                      </p>
+
                     </div>
 
-                    <button className="btn-saffron mt-6 w-full justify-center">
-                      Enroll Now
-                    </button>
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </motion.div>
-          ))}
+                    <motion.div
+                      animate={{
+                        rotate: isOpen
+                          ? 90
+                          : 0,
+                      }}
+                      transition={{
+                        duration: 0.25,
+                      }}
+                      className="mt-2 text-orange-500"
+                    >
+
+                      <FaArrowRight />
+
+                    </motion.div>
+
+                  </div>
+
+                  {/* Description */}
+                  <p className="mt-6 text-slate-600 leading-8">
+
+                    {course.description}
+
+                  </p>
+
+                </button>
+
+                {/* ================================================= */}
+                {/* EXPANDED */}
+                {/* ================================================= */}
+
+                <AnimatePresence>
+
+                  {isOpen && (
+
+                    <motion.div
+                      initial={{
+                        opacity: 0,
+                        height: 0,
+                      }}
+                      animate={{
+                        opacity: 1,
+                        height: 'auto',
+                      }}
+                      exit={{
+                        opacity: 0,
+                        height: 0,
+                      }}
+                      transition={{
+                        duration: 0.35,
+                      }}
+                      className="overflow-hidden"
+                    >
+
+                      <div className="divider my-8"></div>
+
+                      <div className="grid md:grid-cols-2 gap-10">
+
+                        {/* Benefits */}
+                        <div>
+
+                          <h4 className="text-xl font-semibold text-slate-900">
+
+                            Student Benefits
+
+                          </h4>
+
+                          <div className="space-y-4 mt-6">
+
+                            {course.benefits.map((item) => (
+
+                              <div
+                                key={item}
+                                className="flex items-start gap-3"
+                              >
+
+                                <FaCheckCircle className="text-orange-500 mt-1 flex-shrink-0" />
+
+                                <p className="text-slate-700 leading-7 text-sm">
+
+                                  {item}
+
+                                </p>
+
+                              </div>
+
+                            ))}
+
+                          </div>
+
+                        </div>
+
+                        {/* Parent Trust */}
+                        <div>
+
+                          <h4 className="text-xl font-semibold text-slate-900">
+
+                            Parent Confidence
+
+                          </h4>
+
+                          <div className="space-y-4 mt-6">
+
+                            {course.parents.map((item) => (
+
+                              <div
+                                key={item}
+                                className="flex items-start gap-3"
+                              >
+
+                                <div className="w-2 h-2 rounded-full bg-orange-500 mt-3 flex-shrink-0"></div>
+
+                                <p className="text-slate-700 leading-7 text-sm">
+
+                                  {item}
+
+                                </p>
+
+                              </div>
+
+                            ))}
+
+                          </div>
+
+                        </div>
+
+                      </div>
+
+                      {/* CTA */}
+                      <div className="mt-10 flex flex-col sm:flex-row gap-4">
+
+                        <button className="btn-primary">
+
+                          Join This Program
+
+                        </button>
+
+                        <a
+                          href="https://wa.me/918053678711?text=Namaste%20Sir,%20mujhe%20course%20ke%20baare%20mein%20jaankari%20chahiye."
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="btn-secondary"
+                        >
+
+                          Talk on WhatsApp
+
+                        </a>
+
+                      </div>
+
+                    </motion.div>
+
+                  )}
+
+                </AnimatePresence>
+
+              </motion.article>
+            )
+          })}
+
+        </div>
+
+        {/* ===================================================== */}
+        {/* BOTTOM CTA */}
+        {/* ===================================================== */}
+
+        <motion.div
+          initial={{
+            opacity: 0,
+            y: 30,
+          }}
+          animate={
+            inView
+              ? {
+                  opacity: 1,
+                  y: 0,
+                }
+              : {}
+          }
+          transition={{
+            duration: 0.7,
+            delay: 0.2,
+          }}
+          className="mt-28"
+        >
+
+          <div className="premium-card text-center relative overflow-hidden">
+
+            {/* Glow */}
+            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[450px] h-[450px] bg-orange-50 rounded-full blur-3xl opacity-60"></div>
+
+            <div className="relative z-10">
+
+              <span className="section-label">
+                Need Guidance?
+              </span>
+
+              <h3 className="text-4xl md:text-5xl font-bold tracking-tight text-slate-900 mt-4">
+
+                Find The Right Learning Path
+
+              </h3>
+
+              <p className="mt-6 text-lg leading-8 text-slate-600 max-w-2xl mx-auto">
+
+                Get guidance on choosing the most suitable program
+                based on academic goals, preparation level, and future plans.
+
+              </p>
+
+              <div className="mt-10 flex flex-col sm:flex-row justify-center gap-4">
+
+                <button className="btn-primary">
+
+                  Free Course Consultation
+
+                </button>
+
+                <a
+                  href="https://wa.me/918053678711"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn-secondary"
+                >
+
+                  Contact on WhatsApp
+
+                </a>
+
+              </div>
+
+            </div>
+
+          </div>
+
         </motion.div>
 
-        {/* CTA Section */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-          transition={{ delay: 0.6 }}
-          className="glass-card rounded-3xl p-8 lg:p-12 text-center bg-gradient-to-br from-royal-900 to-royal-800 text-white border-0 shadow-royal"
-        >
-          <h3 className="font-display text-3xl font-bold mb-3">
-            Not Sure Which Course?
-          </h3>
-          <p className="text-blue-200 mb-6 max-w-lg mx-auto">
-            Our counselors will help you choose the perfect course based on your goals and current level.
-          </p>
-          <div className="flex flex-wrap justify-center gap-3">
-            <button className="btn-saffron">
-              Free Course Consultation
-            </button>
-            <a
-              href="https://wa.me/919999999999"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn-outline border-white text-white hover:bg-white hover:text-royal-900"
-            >
-              WhatsApp Us
-            </a>
-          </div>
-        </motion.div>
       </div>
+
     </section>
   )
 }

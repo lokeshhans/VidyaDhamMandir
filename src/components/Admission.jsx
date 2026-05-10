@@ -1,268 +1,530 @@
 import React from 'react'
-import { motion } from 'framer-motion'
+
+import {
+  motion,
+} from 'framer-motion'
+
 import { useInView } from 'react-intersection-observer'
-import { FaWhatsapp, FaPhone, FaMapMarkerAlt } from 'react-icons/fa'
+
+import {
+  FaWhatsapp,
+  FaPhoneAlt,
+  FaMapMarkerAlt,
+  FaArrowRight,
+} from 'react-icons/fa'
+
+/* ===================================================== */
+/* DATA */
+/* ===================================================== */
+
+const steps = [
+  {
+    number: '01',
+    title: 'Admission Enquiry',
+    description:
+      'Connect with us through WhatsApp or phone call and share your academic goals.',
+
+    action: 'Start Enquiry',
+
+    link:
+      'https://wa.me/918053678711?text=Namaste%20Sir,%20mujhe%20Vidya%20Dham%20Mandir%20mein%20admission%20ke%20baare%20mein%20jaankari%20chahiye.',
+  },
+
+  {
+    number: '02',
+    title: 'Student Guidance',
+    description:
+      'Receive counselling and academic guidance based on your learning needs and future goals.',
+
+    action: 'Talk With Mentor',
+
+    link:
+      'tel:+918053678711',
+  },
+
+  {
+    number: '03',
+    title: 'Visit The Institute',
+    description:
+      'Experience the learning environment, meet mentors, and understand the academic approach.',
+
+    action: 'View Location',
+
+    link:
+      'https://maps.google.com/?q=Palwal,Haryana',
+  },
+
+  {
+    number: '04',
+    title: 'Start Learning',
+    description:
+      'Attend your first learning session and begin your academic journey with mentorship support.',
+
+    action: 'Join Classes',
+
+    link:
+      'https://wa.me/918053678711',
+  },
+]
+
+const faqs = [
+  {
+    question:
+      'Are classes completely free?',
+    answer:
+      'Yes. Vidya Dham Mandir provides educational support and mentorship without financial pressure.',
+  },
+
+  {
+    question:
+      'Is NEET preparation available?',
+    answer:
+      'Yes. NEET Biology guidance and NCERT focused preparation are available for students.',
+  },
+
+  {
+    question:
+      'Do you support board exam preparation?',
+    answer:
+      'Yes. Students receive conceptual learning support and board-oriented preparation.',
+  },
+
+  {
+    question:
+      'Can parents discuss academic guidance?',
+    answer:
+      'Absolutely. Parents can connect directly for counselling and mentorship discussions.',
+  },
+]
+
+/* ===================================================== */
+/* COMPONENT */
+/* ===================================================== */
 
 export default function Admission() {
-  const { ref, inView } = useInView({ threshold: 0.2, triggerOnce: true })
 
-  const steps = [
-    {
-      number: '1',
-      title: 'WhatsApp Inquiry',
-      desc: 'Message us your name, class, and goal. Instant response guaranteed.',
-      icon: '💬',
-      action: 'WhatsApp Us',
-      link: 'https://wa.me/919999999999?text=Namaste%21%20I%20want%20to%20know%20about%20admission%20at%20Vidya%20Dham%20Mandir',
-    },
-    {
-      number: '2',
-      title: 'Free Counseling Call',
-      desc: 'Our counselor will call you to understand your goals and provide guidance.',
-      icon: '☎️',
-      action: 'Schedule Call',
-      link: 'tel:+919999999999',
-    },
-    {
-      number: '3',
-      title: 'Visit Our Institute',
-      desc: 'Come see our center, meet the team, and feel the environment.',
-      icon: '🏛️',
-      action: 'Get Directions',
-      link: 'https://maps.google.com/?q=Vidya+Dham+Mandir+Palwal',
-    },
-    {
-      number: '4',
-      title: 'Join Classes',
-      desc: 'Start your journey with our first free demo class. No commitment needed.',
-      icon: '🚀',
-      action: 'Join Demo',
-      link: 'https://wa.me/919999999999',
-    },
-  ]
-
-  const container = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: { staggerChildren: 0.12, delayChildren: 0.1 },
-    },
-  }
-
-  const item = {
-    hidden: { opacity: 0, y: 30 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.6 } },
-  }
+  const { ref, inView } = useInView({
+    threshold: 0.15,
+    triggerOnce: true,
+  })
 
   return (
-    <section id="admission" ref={ref} className="section-pad bg-warm-white relative overflow-hidden">
-      {/* Background elements */}
-      <div className="absolute -top-32 right-1/4 w-96 h-96 bg-saffron-500/8 rounded-full blur-3xl" />
-      <div className="absolute -bottom-40 left-0 w-96 h-96 bg-royal-900/5 rounded-full blur-3xl" />
+    <section
+      id="admission"
+      ref={ref}
+      className="relative section-pad overflow-hidden bg-[#fffdf9]"
+      aria-labelledby="admission-heading"
+    >
 
-      <div className="relative max-w-7xl mx-auto">
-        {/* Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-          className="text-center mb-16"
-        >
-          <p className="section-label mb-3">भर्ती प्रक्रिया</p>
-          <h2 className="section-heading mx-auto max-w-3xl">
-            Simple <span className="text-gradient-saffron">4-Step Process</span>
-          </h2>
-          <p className="text-gray-600 text-lg mt-4 max-w-2xl mx-auto">
-            Limited seats for new batches. Join now and start your transformation.
-          </p>
-        </motion.div>
+      {/* ===================================================== */}
+      {/* BACKGROUND */}
+      {/* ===================================================== */}
 
-        {/* Steps timeline */}
-        <motion.div
-          variants={container}
-          initial="hidden"
-          animate={inView ? 'visible' : 'hidden'}
-          className="mb-16"
-        >
-          {/* Desktop timeline */}
-          <div className="hidden lg:grid grid-cols-4 gap-6">
-            {steps.map((step, i) => (
-              <motion.div
-                key={step.number}
-                variants={item}
-                className="relative"
-              >
-                {/* Connecting line */}
-                {i < steps.length - 1 && (
-                  <div className="absolute top-20 left-[calc(50%+48px)] right-[-50%] h-1 bg-gradient-to-r from-saffron-500 to-transparent hidden" />
-                )}
+      <div className="absolute inset-0 pointer-events-none">
 
-                {/* Card */}
-                <div className="glass-card rounded-2xl p-6 text-center h-full flex flex-col justify-between hover:shadow-saffron transition-all group">
-                  {/* Number badge */}
-                  <div className="absolute -top-5 left-1/2 -translate-x-1/2 w-12 h-12 rounded-full bg-gradient-to-br from-saffron-500 to-orange-600 text-white font-bold text-lg flex items-center justify-center shadow-saffron">
-                    {step.number}
-                  </div>
+        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-orange-50 rounded-full blur-3xl opacity-50"></div>
 
-                  {/* Content */}
-                  <div className="mt-6">
-                    <div className="text-4xl mb-3">{step.icon}</div>
-                    <h4 className="font-bold text-royal-900 text-lg mb-2">{step.title}</h4>
-                    <p className="text-gray-600 text-sm leading-relaxed">{step.desc}</p>
-                  </div>
+        <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-amber-50 rounded-full blur-3xl opacity-40"></div>
 
-                  {/* CTA Button */}
-                  <a
-                    href={step.link}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="btn-outline border-saffron-500 text-saffron-600 hover:bg-saffron-600 hover:text-white mt-6 text-sm justify-center"
-                  >
-                    {step.action}
-                  </a>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-
-          {/* Mobile timeline */}
-          <div className="lg:hidden space-y-4">
-            {steps.map((step, i) => (
-              <motion.div
-                key={step.number}
-                variants={item}
-                className="glass-card rounded-2xl p-6 flex gap-4"
-              >
-                <div className="flex-shrink-0">
-                  <div className="w-14 h-14 rounded-full bg-gradient-to-br from-saffron-500 to-orange-600 text-white font-bold text-xl flex items-center justify-center shadow-saffron">
-                    {step.number}
-                  </div>
-                </div>
-                <div className="flex-1">
-                  <div className="text-2xl mb-1">{step.icon}</div>
-                  <h4 className="font-bold text-royal-900 mb-1">{step.title}</h4>
-                  <p className="text-gray-600 text-sm mb-3">{step.desc}</p>
-                  <a
-                    href={step.link}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-saffron-600 hover:text-saffron-700 font-semibold text-sm flex items-center gap-1"
-                  >
-                    {step.action} →
-                  </a>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </motion.div>
-
-        {/* Urgency section */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.95 }}
-          animate={inView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.95 }}
-          transition={{ delay: 0.5 }}
-          className="glass-card rounded-3xl p-8 lg:p-12 border-2 border-saffron-500 bg-gradient-to-br from-saffron-50 to-white shadow-saffron"
-        >
-          <div className="grid md:grid-cols-2 gap-8 items-center">
-            {/* Left — Urgency messaging */}
-            <div>
-              <div className="flex items-center gap-2 mb-4">
-                <span className="text-2xl">⚡</span>
-                <span className="section-label">LIMITED SEATS</span>
-              </div>
-              <h3 className="font-display text-3xl font-bold text-royal-900 mb-4">
-                New Batches Filling <span className="text-saffron-600">Fast</span>
-              </h3>
-              <ul className="space-y-3 mb-6">
-                {[
-                  'Morning Batch: 8:00 AM - 11:00 AM (5 seats left)',
-                  'Evening Batch: 4:00 PM - 7:00 PM (8 seats left)',
-                  'Weekend Classes: Sat-Sun 10 AM - 1 PM (10 seats)',
-                ].map((batch, i) => (
-                  <li key={i} className="flex gap-3 text-gray-700">
-                    <span className="text-saffron-600 font-bold">✓</span>
-                    {batch}
-                  </li>
-                ))}
-              </ul>
-              <p className="text-sm text-gray-600 italic">
-                Seats filling up fast. Don't miss this free opportunity!
-              </p>
-            </div>
-
-            {/* Right — Contact options */}
-            <div className="space-y-3">
-              <a
-                href="https://wa.me/919999999999?text=Mujhe%20admission%20lena%20hai%20Vidya%20Dham%20Mandir%20mein"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-3 bg-green-500 hover:bg-green-600 text-white font-bold p-4 rounded-xl transition-all duration-200"
-              >
-                <FaWhatsapp className="text-2xl" />
-                <span>WhatsApp Now</span>
-              </a>
-              <a
-                href="tel:+919999999999"
-                className="flex items-center gap-3 bg-blue-500 hover:bg-blue-600 text-white font-bold p-4 rounded-xl transition-all duration-200"
-              >
-                <FaPhone className="text-2xl" />
-                <span>Call Us</span>
-              </a>
-              <a
-                href="https://maps.google.com/?q=Vidya+Dham+Mandir+Palwal"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-3 bg-orange-500 hover:bg-orange-600 text-white font-bold p-4 rounded-xl transition-all duration-200"
-              >
-                <FaMapMarkerAlt className="text-2xl" />
-                <span>Visit Us</span>
-              </a>
-            </div>
-          </div>
-        </motion.div>
-
-        {/* FAQ Preview */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-          transition={{ delay: 0.7 }}
-          className="mt-16"
-        >
-          <h3 className="font-display text-2xl font-bold text-royal-900 mb-8 text-center">
-            Common Questions
-          </h3>
-          <div className="grid md:grid-cols-2 gap-6">
-            {[
-              {
-                q: 'Kya sach mein free hai?',
-                a: 'Haan bilkul free hai. Koi hidden charges nahi, sirf pure mano se free education.',
-              },
-              {
-                q: 'Classes when start honge?',
-                a: 'Next batch shuru hone wala hai 15th of this month. Abhi enroll karo.',
-              },
-              {
-                q: 'Kya online classes bhi available hain?',
-                a: 'Mostly offline hain, par special cases mein online option bhi diye ja sakte hain.',
-              },
-              {
-                q: 'Kya board exam ki tayyari hoti hai?',
-                a: 'Haan, sirf NEET nahi, board exam ki bhi quality tayyari dete hain.',
-              },
-            ].map((faq, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, y: 10 }}
-                animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
-                transition={{ delay: 0.8 + i * 0.1 }}
-                className="glass-card rounded-xl p-5"
-              >
-                <p className="font-bold text-royal-800 mb-2 text-sm">❓ {faq.q}</p>
-                <p className="text-gray-600 text-sm">💡 {faq.a}</p>
-              </motion.div>
-            ))}
-          </div>
-        </motion.div>
       </div>
+
+      <div className="container-custom relative z-10">
+
+        {/* ===================================================== */}
+        {/* HEADER */}
+        {/* ===================================================== */}
+
+        <motion.div
+          initial={{
+            opacity: 0,
+            y: 30,
+          }}
+          animate={
+            inView
+              ? {
+                  opacity: 1,
+                  y: 0,
+                }
+              : {}
+          }
+          transition={{
+            duration: 0.7,
+          }}
+          className="max-w-4xl mx-auto text-center"
+        >
+
+          <span className="section-label">
+            Admissions Process
+          </span>
+
+          <h2
+            id="admission-heading"
+            className="section-heading mt-4 text-balance"
+          >
+
+            A Simple Path To
+            <span className="text-orange-soft">
+              {' '}Meaningful Learning
+            </span>
+
+          </h2>
+
+          <p className="mt-6 text-lg leading-8 text-slate-600 max-w-3xl mx-auto">
+
+            Join a student-first learning environment focused on
+            mentorship, academic growth, and confidence building.
+
+          </p>
+
+        </motion.div>
+
+        {/* ===================================================== */}
+        {/* STEPS */}
+        {/* ===================================================== */}
+
+        <div className="grid lg:grid-cols-4 gap-6 mt-20">
+
+          {steps.map((step, index) => (
+
+            <motion.article
+              key={step.number}
+              initial={{
+                opacity: 0,
+                y: 30,
+              }}
+              animate={
+                inView
+                  ? {
+                      opacity: 1,
+                      y: 0,
+                    }
+                  : {}
+              }
+              transition={{
+                duration: 0.6,
+                delay: index * 0.08,
+              }}
+              className="premium-card relative overflow-hidden flex flex-col"
+            >
+
+              {/* Top Line */}
+              <div className="absolute top-0 left-0 w-full h-[3px] bg-orange-500"></div>
+
+              {/* Number */}
+              <div className="text-6xl font-bold tracking-tight text-orange-100">
+
+                {step.number}
+
+              </div>
+
+              {/* Content */}
+              <div className="mt-6 flex-grow">
+
+                <h3 className="text-2xl font-semibold text-slate-900 leading-snug">
+
+                  {step.title}
+
+                </h3>
+
+                <p className="mt-5 text-slate-600 leading-8">
+
+                  {step.description}
+
+                </p>
+
+              </div>
+
+              {/* CTA */}
+              <a
+                href={step.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-8 inline-flex items-center gap-3 text-orange-600 font-semibold hover:text-orange-700 transition-colors duration-300"
+              >
+
+                {step.action}
+
+                <FaArrowRight className="text-sm" />
+
+              </a>
+
+            </motion.article>
+
+          ))}
+
+        </div>
+
+        {/* ===================================================== */}
+        {/* CTA SECTION */}
+        {/* ===================================================== */}
+
+        <motion.div
+          initial={{
+            opacity: 0,
+            y: 30,
+          }}
+          animate={
+            inView
+              ? {
+                  opacity: 1,
+                  y: 0,
+                }
+              : {}
+          }
+          transition={{
+            delay: 0.3,
+          }}
+          className="mt-28"
+        >
+
+          <div className="premium-card relative overflow-hidden">
+
+            {/* Glow */}
+            <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-orange-50 rounded-full blur-3xl opacity-60"></div>
+
+            <div className="relative z-10 grid lg:grid-cols-[1.2fr_0.8fr] gap-12 items-center">
+
+              {/* LEFT */}
+              <div>
+
+                <span className="section-label">
+                  New Admissions Open
+                </span>
+
+                <h3 className="text-4xl md:text-5xl font-bold tracking-tight text-slate-900 mt-4 leading-tight">
+
+                  Begin Your Academic Journey
+                  With Guidance and Support
+
+                </h3>
+
+                <p className="mt-6 text-lg leading-8 text-slate-600 max-w-2xl">
+
+                  Vidya Dham Mandir provides NEET Biology guidance,
+                  NCERT learning support, and mentorship designed
+                  to help students build strong academic foundations.
+
+                </p>
+
+                {/* Points */}
+                <div className="grid sm:grid-cols-2 gap-4 mt-10">
+
+                  {[
+                    'Free educational support',
+                    'NEET Biology mentorship',
+                    'Student-first learning',
+                    'Parent guidance available',
+                  ].map((point) => (
+
+                    <div
+                      key={point}
+                      className="flex items-start gap-3"
+                    >
+
+                      <div className="w-2 h-2 rounded-full bg-orange-500 mt-3"></div>
+
+                      <p className="text-slate-700 leading-7">
+
+                        {point}
+
+                      </p>
+
+                    </div>
+
+                  ))}
+
+                </div>
+
+              </div>
+
+              {/* RIGHT */}
+              <div className="space-y-4">
+
+                {/* WhatsApp */}
+                <a
+                  href="https://wa.me/918053678711"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-5 rounded-3xl bg-green-500 hover:bg-green-600 text-white p-6 transition-all duration-300"
+                >
+
+                  <div className="w-14 h-14 rounded-2xl bg-white/15 flex items-center justify-center">
+
+                    <FaWhatsapp className="text-2xl" />
+
+                  </div>
+
+                  <div>
+
+                    <p className="text-sm text-green-100 uppercase tracking-wide">
+
+                      Quick Support
+
+                    </p>
+
+                    <h4 className="font-semibold text-lg mt-1">
+
+                      Connect on WhatsApp
+
+                    </h4>
+
+                  </div>
+
+                </a>
+
+                {/* Call */}
+                <a
+                  href="tel:+918053678711"
+                  className="flex items-center gap-5 rounded-3xl bg-[#0b1120] hover:bg-slate-900 text-white p-6 transition-all duration-300"
+                >
+
+                  <div className="w-14 h-14 rounded-2xl bg-white/10 flex items-center justify-center">
+
+                    <FaPhoneAlt className="text-xl" />
+
+                  </div>
+
+                  <div>
+
+                    <p className="text-sm text-slate-400 uppercase tracking-wide">
+
+                      Admission Helpline
+
+                    </p>
+
+                    <h4 className="font-semibold text-lg mt-1 text-white">
+
+                      +91 8053678711
+
+                    </h4>
+
+                  </div>
+
+                </a>
+
+                {/* Location */}
+                <a
+                  href="https://maps.google.com/?q=Palwal,Haryana"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-5 rounded-3xl bg-orange-500 hover:bg-orange-600 text-white p-6 transition-all duration-300"
+                >
+
+                  <div className="w-14 h-14 rounded-2xl bg-white/15 flex items-center justify-center">
+
+                    <FaMapMarkerAlt className="text-xl" />
+
+                  </div>
+
+                  <div>
+
+                    <p className="text-sm text-orange-100 uppercase tracking-wide">
+
+                      Visit Institute
+
+                    </p>
+
+                    <h4 className="font-semibold text-lg mt-1">
+
+                      Palwal, Haryana
+
+                    </h4>
+
+                  </div>
+
+                </a>
+
+              </div>
+
+            </div>
+
+          </div>
+
+        </motion.div>
+
+        {/* ===================================================== */}
+        {/* FAQ */}
+        {/* ===================================================== */}
+
+        <motion.div
+          initial={{
+            opacity: 0,
+            y: 30,
+          }}
+          animate={
+            inView
+              ? {
+                  opacity: 1,
+                  y: 0,
+                }
+              : {}
+          }
+          transition={{
+            delay: 0.5,
+          }}
+          className="mt-28"
+        >
+
+          <div className="text-center mb-14">
+
+            <span className="section-label">
+              Frequently Asked Questions
+            </span>
+
+            <h3 className="section-heading mt-4">
+
+              Common Admission Questions
+
+            </h3>
+
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-6">
+
+            {faqs.map((faq, index) => (
+
+              <motion.article
+                key={faq.question}
+                initial={{
+                  opacity: 0,
+                  y: 20,
+                }}
+                animate={
+                  inView
+                    ? {
+                        opacity: 1,
+                        y: 0,
+                      }
+                    : {}
+                }
+                transition={{
+                  delay: 0.2 + index * 0.08,
+                }}
+                className="premium-card"
+              >
+
+                <h4 className="text-xl font-semibold text-slate-900 leading-snug">
+
+                  {faq.question}
+
+                </h4>
+
+                <p className="mt-5 text-slate-600 leading-8">
+
+                  {faq.answer}
+
+                </p>
+
+              </motion.article>
+
+            ))}
+
+          </div>
+
+        </motion.div>
+
+      </div>
+
     </section>
   )
 }

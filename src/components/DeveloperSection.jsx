@@ -1,225 +1,411 @@
 import React from 'react'
+
 import { motion } from 'framer-motion'
+
 import {
   FaInstagram,
   FaWhatsapp,
   FaGlobe,
   FaPhoneAlt,
-  FaCode,
+  FaArrowRight,
 } from 'react-icons/fa'
 
+/* ===================================================== */
+/* DATA */
+/* ===================================================== */
+
+const skills = [
+  'React.js',
+  'Tailwind CSS',
+  'Framer Motion',
+  'SEO Optimization',
+  'Responsive Design',
+  'Modern UI/UX',
+]
+
+/* ===================================================== */
+/* COMPONENT */
+/* ===================================================== */
+
 export default function DeveloperSection() {
+
   return (
     <section
       id="developer"
-      className="relative overflow-hidden bg-[#071028] py-16 sm:py-20 lg:py-28 px-4 sm:px-6"
+      className="relative overflow-hidden bg-[#071028] section-pad"
+      aria-labelledby="developer-heading"
     >
-      {/* Background Glow */}
-      <div className="absolute top-0 left-0 w-72 h-72 bg-orange-500/10 blur-3xl rounded-full" />
-      <div className="absolute bottom-0 right-0 w-72 h-72 bg-blue-500/10 blur-3xl rounded-full" />
 
-      <div className="relative z-10 max-w-7xl mx-auto">
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
+      {/* ===================================================== */}
+      {/* BACKGROUND */}
+      {/* ===================================================== */}
+
+      <div className="absolute inset-0 pointer-events-none">
+
+        <div className="absolute top-0 left-0 w-[500px] h-[500px] bg-orange-500/10 rounded-full blur-3xl"></div>
+
+        <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-blue-500/10 rounded-full blur-3xl"></div>
+
+      </div>
+
+      {/* Grid Pattern */}
+      <div className="absolute inset-0 opacity-[0.03]">
+
+        <div
+          className="w-full h-full"
+          style={{
+            backgroundImage: `
+              linear-gradient(rgba(255,255,255,0.08) 1px, transparent 1px),
+              linear-gradient(90deg, rgba(255,255,255,0.08) 1px, transparent 1px)
+            `,
+            backgroundSize: '40px 40px',
+          }}
+        />
+
+      </div>
+
+      <div className="container-custom relative z-10">
+
+        <div className="grid lg:grid-cols-[1fr_1fr] gap-16 items-center">
+
+          {/* ================================================= */}
           {/* LEFT SIDE */}
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.7 }}
-          >
-            <p className="text-orange-400 uppercase tracking-[4px] text-xs sm:text-sm font-semibold mb-4">
-              Website Developer
-            </p>
+          {/* ================================================= */}
 
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white leading-tight mb-6">
-              Crafted with Passion by{' '}
-              <span className="bg-gradient-to-r from-orange-400 to-yellow-300 bg-clip-text text-transparent">
-                GrowUpCraft
+          <motion.div
+            initial={{
+              opacity: 0,
+              y: 30,
+            }}
+            whileInView={{
+              opacity: 1,
+              y: 0,
+            }}
+            viewport={{
+              once: true,
+            }}
+            transition={{
+              duration: 0.7,
+            }}
+          >
+
+            {/* Label */}
+            <span className="inline-flex items-center gap-3 px-4 py-2 rounded-full bg-white/5 border border-white/10 text-orange-300 text-xs uppercase tracking-[0.18em] font-semibold">
+
+              Website Developer
+
+            </span>
+
+            {/* Heading */}
+            <h2
+              id="developer-heading"
+              className="mt-8 text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-white leading-[1.05]"
+            >
+
+              Crafted with Precision
+              <span className="block text-orange-400">
+                by GrowUpCraft
               </span>
+
             </h2>
 
-            <p className="text-blue-100 text-base sm:text-lg leading-relaxed mb-5">
-              This website is designed and developed with a premium modern
-              frontend experience focused on trust, performance, emotional
-              storytelling, and mobile-first design for Indian educational
-              institutes.
+            {/* Description */}
+            <p className="mt-8 text-lg leading-8 text-slate-300 max-w-2xl">
+
+              Modern educational websites focused on premium UI/UX,
+              mobile responsiveness, SEO optimization, emotional storytelling,
+              and high-conversion digital experiences.
+
             </p>
 
-            <p className="text-blue-200 leading-relaxed mb-8 text-sm sm:text-base">
-              From smooth animations to SEO optimization and handcrafted UI,
-              every section is carefully built to create a strong digital
-              presence and increase admissions, trust, and engagement.
+            <p className="mt-6 text-slate-400 leading-8">
+
+              Every section is carefully designed to help institutes
+              build trust, improve engagement, and create a strong
+              digital identity for students and parents.
+
             </p>
 
             {/* Skills */}
-            <div className="flex flex-wrap gap-3 mb-8">
-              {[
-                'React.js',
-                'Tailwind CSS',
-                'Framer Motion',
-                'Responsive Design',
-                'SEO Optimization',
-                'Node.js',
-                'Express.js',
-              ].map((skill) => (
-                <span
+            <div className="flex flex-wrap gap-3 mt-10">
+
+              {skills.map((skill) => (
+
+                <div
                   key={skill}
-                  className="bg-white/10 border border-white/10 text-blue-100 text-xs sm:text-sm px-4 py-2 rounded-full backdrop-blur-xl"
+                  className="px-4 py-2 rounded-full bg-white/5 border border-white/10 text-slate-200 text-sm"
                 >
+
                   {skill}
-                </span>
+
+                </div>
+
               ))}
+
             </div>
 
-            {/* Buttons */}
-            <div className="flex flex-wrap gap-4">
+            {/* CTA */}
+            <div className="flex flex-wrap gap-4 mt-12">
+
+              {/* Website */}
               <a
                 href="https://grow-up-craft.vercel.app"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="bg-orange-500 hover:bg-orange-400 text-white px-6 py-3 rounded-full font-semibold transition-all duration-300 shadow-xl hover:scale-105 flex items-center gap-2"
+                className="btn-primary"
               >
+
                 <FaGlobe />
+
                 Visit Website
+
               </a>
 
+              {/* WhatsApp */}
               <a
                 href="https://wa.me/918930296001"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="bg-green-500 hover:bg-green-400 text-white px-6 py-3 rounded-full font-semibold transition-all duration-300 shadow-xl hover:scale-105 flex items-center gap-2"
+                className="btn-secondary bg-white/5 border-white/10 text-white hover:bg-white hover:text-slate-900"
               >
+
                 <FaWhatsapp />
+
                 WhatsApp
+
               </a>
+
             </div>
+
           </motion.div>
 
+          {/* ================================================= */}
           {/* RIGHT SIDE */}
+          {/* ================================================= */}
+
           <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
+            initial={{
+              opacity: 0,
+              x: 30,
+            }}
+            whileInView={{
+              opacity: 1,
+              x: 0,
+            }}
+            viewport={{
+              once: true,
+            }}
+            transition={{
+              duration: 0.8,
+            }}
             className="relative"
           >
-            <div className="backdrop-blur-xl bg-white/10 border border-white/10 rounded-[30px] p-6 sm:p-8 shadow-2xl overflow-hidden relative">
-              {/* Decorative Glow */}
-              <div className="absolute top-0 right-0 w-44 h-44 bg-orange-500/10 rounded-full blur-3xl" />
 
-              {/* Top */}
-              <div className="flex items-center gap-5 mb-8 relative z-10">
-                <div className="w-20 h-20 rounded-3xl bg-gradient-to-br from-orange-500 to-orange-600 flex items-center justify-center text-white text-3xl shadow-2xl flex-shrink-0">
-                  <FaCode />
-                </div>
+            {/* Main Card */}
+            <div className="relative overflow-hidden rounded-[36px] border border-white/10 bg-white/[0.04] backdrop-blur-2xl shadow-2xl">
 
-                <div>
-                  <h3 className="text-white text-2xl font-bold">
-                    Lokesh
-                  </h3>
+              {/* Glow */}
+              <div className="absolute top-0 right-0 w-[300px] h-[300px] bg-orange-500/10 rounded-full blur-3xl"></div>
 
-                  <p className="text-orange-300 text-sm mt-1">
-                    Frontend Developer & Founder
+              {/* Image Section */}
+              <div className="relative h-[80px] overflow-hidden">
+
+                {/* AI Portrait */}
+                {/* <img
+                  src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=1200&auto=format&fit=crop"
+                  alt="Lokesh Founder of GrowUpCraft"
+                  loading="lazy"
+                  className="w-full h-full object-cover"
+                /> */}
+
+                {/* Overlay */}
+                <div className="absolute inset-0 bg-gradient-to-t from-[#071028] via-[#071028]/20 to-transparent"></div>
+
+                {/* Floating Badge */}
+                <div className="absolute top-6 left-6 rounded-full bg-white/10 border border-white/10 backdrop-blur-xl px-4 py-2">
+
+                  <p className="text-xs uppercase tracking-[0.18em] text-orange-300 font-semibold">
+
+                    Developer
+
                   </p>
 
-                  <p className="text-blue-200 text-sm">
-                    GrowUpCraft
-                  </p>
                 </div>
+
               </div>
 
-              {/* Details */}
-              <div className="space-y-4 relative z-10">
-                <a
-                  href="https://grow-up-craft.vercel.app"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center justify-between bg-white/5 border border-white/5 rounded-2xl px-5 py-4 hover:bg-white/10 transition-all duration-300"
-                >
-                  <div className="flex items-center gap-3">
-                    <FaGlobe className="text-orange-400 text-lg" />
+              {/* Content */}
+              <div className="relative z-10 p-8">
 
-                    <div>
-                      <p className="text-white text-sm font-medium">
-                        Website
-                      </p>
+                {/* Name */}
+                <div className="flex items-start justify-between gap-6">
 
-                      <p className="text-blue-200 text-xs">
-                        grow-up-craft.vercel.app
-                      </p>
-                    </div>
+                  <div>
+
+                    <h3 className="text-3xl font-bold text-white tracking-tight">
+
+                      Lokesh
+
+                    </h3>
+
+                    <p className="text-orange-300 mt-2 font-medium">
+
+                      Founder • GrowUpCraft
+
+                    </p>
+
                   </div>
 
-                  <span className="text-orange-300 text-xs font-semibold">
-                    Visit
-                  </span>
-                </a>
+                  <div className="w-14 h-14 rounded-2xl bg-orange-500 flex items-center justify-center shadow-2xl shadow-orange-500/20">
 
-                <a
-                  href="https://instagram.com/growupcraft"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center justify-between bg-white/5 border border-white/5 rounded-2xl px-5 py-4 hover:bg-white/10 transition-all duration-300"
-                >
-                  <div className="flex items-center gap-3">
-                    <FaInstagram className="text-pink-400 text-lg" />
+                    <div className="w-3 h-3 rounded-full bg-white"></div>
 
-                    <div>
-                      <p className="text-white text-sm font-medium">
-                        Instagram
-                      </p>
-
-                      <p className="text-blue-200 text-xs">
-                        @growupcraft
-                      </p>
-                    </div>
                   </div>
 
-                  <span className="text-pink-300 text-xs font-semibold">
-                    Follow
-                  </span>
-                </a>
+                </div>
 
-                <a
-                  href="tel:+918930296001"
-                  className="flex items-center justify-between bg-white/5 border border-white/5 rounded-2xl px-5 py-4 hover:bg-white/10 transition-all duration-300"
-                >
-                  <div className="flex items-center gap-3">
-                    <FaPhoneAlt className="text-green-400 text-lg" />
+                {/* Description */}
+                <p className="mt-8 text-slate-300 leading-8">
 
-                    <div>
-                      <p className="text-white text-sm font-medium">
-                        Contact Number
-                      </p>
+                  Specialized in building premium modern websites
+                  for educational institutes, startups, and businesses
+                  with focus on design quality, SEO, and responsive performance.
 
-                      <p className="text-blue-200 text-xs">
-                        +91 8930296001
-                      </p>
-                    </div>
-                  </div>
-
-                  <span className="text-green-300 text-xs font-semibold">
-                    Call
-                  </span>
-                </a>
-              </div>
-
-              {/* Bottom Note */}
-              <div className="mt-8 bg-orange-50 rounded-2xl p-5 border border-orange-200 relative z-10">
-                <p className="text-orange-900 text-sm italic leading-relaxed">
-                  “Modern websites for schools, coaching institutes, local
-                  businesses, and startups with premium UI/UX and strong mobile
-                  responsiveness.”
                 </p>
 
-                <p className="text-orange-500 text-xs mt-3 text-right font-semibold">
-                  — GrowUpCraft
-                </p>
+                {/* Contact Cards */}
+                <div className="space-y-4 mt-10">
+
+                  {/* Website */}
+                  <a
+                    href="https://grow-up-craft.vercel.app"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group flex items-center justify-between rounded-2xl border border-white/5 bg-white/[0.03] px-5 py-5 hover:bg-white/[0.05] transition-all duration-300"
+                  >
+
+                    <div className="flex items-center gap-4">
+
+                      <div className="w-12 h-12 rounded-2xl bg-orange-500/10 flex items-center justify-center">
+
+                        <FaGlobe className="text-orange-400 text-lg" />
+
+                      </div>
+
+                      <div>
+
+                        <p className="text-white font-medium">
+                          Portfolio Website
+                        </p>
+
+                        <p className="text-slate-400 text-sm mt-1">
+                          grow-up-craft.vercel.app
+                        </p>
+
+                      </div>
+
+                    </div>
+
+                    <FaArrowRight className="text-orange-300 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+
+                  </a>
+
+                  {/* Instagram */}
+                  <a
+                    href="https://instagram.com/growupcraft"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group flex items-center justify-between rounded-2xl border border-white/5 bg-white/[0.03] px-5 py-5 hover:bg-white/[0.05] transition-all duration-300"
+                  >
+
+                    <div className="flex items-center gap-4">
+
+                      <div className="w-12 h-12 rounded-2xl bg-pink-500/10 flex items-center justify-center">
+
+                        <FaInstagram className="text-pink-400 text-lg" />
+
+                      </div>
+
+                      <div>
+
+                        <p className="text-white font-medium">
+                          Instagram
+                        </p>
+
+                        <p className="text-slate-400 text-sm mt-1">
+                          @growupcraft
+                        </p>
+
+                      </div>
+
+                    </div>
+
+                    <FaArrowRight className="text-pink-300 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+
+                  </a>
+
+                  {/* Contact */}
+                  <a
+                    href="tel:+918930296001"
+                    className="group flex items-center justify-between rounded-2xl border border-white/5 bg-white/[0.03] px-5 py-5 hover:bg-white/[0.05] transition-all duration-300"
+                  >
+
+                    <div className="flex items-center gap-4">
+
+                      <div className="w-12 h-12 rounded-2xl bg-green-500/10 flex items-center justify-center">
+
+                        <FaPhoneAlt className="text-green-400 text-lg" />
+
+                      </div>
+
+                      <div>
+
+                        <p className="text-white font-medium">
+                          Contact Number
+                        </p>
+
+                        <p className="text-slate-400 text-sm mt-1">
+                          +91 8930296001
+                        </p>
+
+                      </div>
+
+                    </div>
+
+                    <FaArrowRight className="text-green-300 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+
+                  </a>
+
+                </div>
+
+                {/* Footer Note */}
+                <div className="mt-10 rounded-2xl border border-orange-500/20 bg-orange-500/10 px-5 py-5">
+
+                  <p className="text-orange-100 leading-7 italic">
+
+                    “Building modern websites that combine performance,
+                    storytelling, trust, and premium user experience.”
+
+                  </p>
+
+                  <p className="mt-4 text-sm text-orange-300 font-medium">
+
+                    — GrowUpCraft
+
+                  </p>
+
+                </div>
+
               </div>
+
             </div>
+
           </motion.div>
+
         </div>
+
       </div>
+
     </section>
   )
 }
